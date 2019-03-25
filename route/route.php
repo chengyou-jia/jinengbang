@@ -13,7 +13,12 @@ use think\facade\Route;
 
 Route::get('/', 'index/index/index');
 Route::group('api', function () {
-
+    Route::group('user', function () {
+        Route::get('/', 'index/user/getInfo');
+        Route::post('/','index/user/create');
+        Route::put('/', 'index/user/update');
+        Route::delete('/','index/user/delete');
+    });
 });
 
 

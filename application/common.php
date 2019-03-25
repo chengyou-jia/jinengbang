@@ -23,3 +23,15 @@ function error($errMsg = 'ERROR')
     return json(['success' => 0, 'err_msg' => $errMsg]);
 }
 
+// 输入数据验证
+function validateData($data,$validate,$scene=null)
+{
+    $validate = validate($validate);
+    $result = $validate->scene($scene)->check($data);
+    if ($result) {
+        return true;
+    } else {
+        return $validate->getError();
+    }
+}
+

@@ -14,5 +14,13 @@ use think\Controller;
 
 class BaseController extends Controller
 {
+    protected $beforeActionList = [
+        'is_login',
+    ];
+
+    protected function is_login()
+    {
+
+    }
 
 }
