@@ -12,6 +12,7 @@
 use think\facade\Route;
 
 Route::get('/', 'index/index/index');
+Route::get('/xdebug', 'index/index/xdebug');
 Route::group('api', function () {
     Route::group('user', function () {
         Route::get('/', 'index/user/getInfo');
@@ -19,7 +20,19 @@ Route::group('api', function () {
         Route::put('/', 'index/user/update');
         Route::delete('/','index/user/delete');
     });
+
+    Route::group('label', function () {
+        Route::get('/:label_id','index/label/getOne');
+        Route::post('/','index/label/create');
+        Route::put('/:label_id', 'index/label/update');
+        Route::delete('/:label_id','index/label/delete');
+    });
+    Route::get('/labels','index/label/getAll');
+
+
 });
+
+Route::miss('index/index/miss');
 
 
 return [
