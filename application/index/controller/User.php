@@ -19,7 +19,17 @@ class User extends BaseController
 
     public function login()
     {
-
+        // todo 现在只是模拟登陆肯定要改
+        $wechat_id = input('wechat_id');
+        $user = model('User');
+        $user = $user->where('wechat_id',$wechat_id)->find();
+        if ($user) {
+            session('user',$user);
+            dump($user);
+            return success();
+        } else {
+            return error('找不到该用户');
+        }
     }
 
     //这玩意不确定要不要写

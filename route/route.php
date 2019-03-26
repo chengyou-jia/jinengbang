@@ -19,6 +19,7 @@ Route::group('api', function () {
         Route::post('/','index/user/create');
         Route::put('/', 'index/user/update');
         Route::delete('/','index/user/delete');
+        Route::get('login','index/user/login');
     });
 
     Route::group('label', function () {
