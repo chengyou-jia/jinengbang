@@ -30,6 +30,15 @@ Route::group('api', function () {
     });
     Route::get('/labels','index/label/getAll');
 
+    Route::group('help', function () {
+        Route::get('/:help_id','index/help/getOne');
+        Route::post('/','index/help/create');
+        Route::put('/:help_id', 'index/help/update');
+        Route::delete('/:help_id','index/help/delete');
+    });
+    Route::get('/helps','index/help/getAll');
+
+
 
 });
 

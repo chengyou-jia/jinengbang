@@ -22,6 +22,11 @@ class User extends BaseModel
         return $this->hasMany('Label','user_id','user_id');
     }
 
+    public function helps()
+    {
+        return $this->hasMany('Help','user_id','user_id');
+    }
+
     public function isHadLabelType($type)
     {
         $result = $this->labels()->where('type',$type)->find();

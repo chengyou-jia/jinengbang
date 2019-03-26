@@ -103,8 +103,8 @@ class Label extends BaseController
     {
         $user_id = session('user.user_id');
         $user = UserModel::get($user_id);
-        $label = $user->labels()->where('label_id',$label_id)->select();
-        if (count($label)) {
+        $label = $user->labels()->where('label_id',$label_id)->find();
+        if (!empty($label)) {
             return success($label);
         } else {
             return error('你没有标签');
