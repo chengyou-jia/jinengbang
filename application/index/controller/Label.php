@@ -45,21 +45,71 @@ class Label extends BaseController
 
     public function update($label_id)
     {
+        $data = input('param.');
+        $checkResult = validateData($data,'Label','update');
+        if ($checkResult === true) {
+            $user_id = session('user.user_id');
+            $user = UserModel::get($user_id);
+            $label= $user->labels()->where('label_id',$label_id)->find();
+            if (empty($label)) {
+                return error('你没有此标签');
+            } else {
+                $label->description = $data['description'];
+                $result = $label->save();
+                if ($result) {
+                    return success();
+                } else {
+                    return error('更新失败');
+                }
+            }
+
+        } else {
+            return error($checkResult);
+        }
 
     }
 
     public function delete($label_id)
     {
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
+        $label= $user->labels()->where('label_id',$label_id)->find();
+        if (empty($label)) {
+            return error('你没有此标签');
+        } else {
+            $result = $label->delete();
+            if ($result) {
+                return success();
+            } else {
+                return error('删除失败');
+            }
+        }
 
     }
 
     public function getAll()
     {
-
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
+        $labels = $user->labels()->where(true)->select();
+        if (count($labels)) {
+            return success($labels);
+        } else {
+            return error('你没有标签');
+        }
     }
 
     public function getOne($label_id)
     {
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
+        $label = $user->labels()->where('label_id',$label_id)->select();
+        if (count($label)) {
+            return success($label);
+        } else {
+            return error('你没有标签');
+        }
+
 
     }
 

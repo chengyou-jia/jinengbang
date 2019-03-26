@@ -24,6 +24,7 @@ class Label extends Validate
     ];
 
     protected $scene = [
+        'update'  =>  ['description']
 
     ];
 
