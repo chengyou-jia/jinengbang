@@ -45,10 +45,13 @@ Route::group('api', function () {
     });
     Route::get('help_comments/:help_id','index/helpComment/getAll');
 
-
-
-
-
+    Route::group('question', function () {
+        Route::get('/:question_id','index/question/getOne');
+        Route::post('/','index/question/create');
+        Route::put('/:question_id', 'index/question/update');
+        Route::delete('/:question_id','index/question/delete');
+    });
+    Route::get('/questions','index/question/getAll');
 
 });
 

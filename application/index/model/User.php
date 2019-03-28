@@ -27,6 +27,11 @@ class User extends BaseModel
         return $this->hasMany('Help','user_id','user_id');
     }
 
+    public function questions()
+    {
+        return $this->hasMany('Question','user_id','user_id');
+    }
+
     public function helpComments()
     {
         return $this->hasMany('HelpComment','user_id','user_id');

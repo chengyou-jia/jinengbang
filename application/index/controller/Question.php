@@ -3,8 +3,8 @@
  * Created by PhpStorm.
  * Author: 贾成铕
  * Email: jiachengyou@tiaozhan.com
- * Date: 2019/3/26
- * Time: 21:39
+ * Date: 2019/3/28
+ * Time: 13:59
  */
 
 namespace app\index\controller;
@@ -12,23 +12,21 @@ namespace app\index\controller;
 
 use app\index\common\BaseController;
 use app\index\model\User as UserModel;
-use app\index\model\Help as HelpModel;
+use app\index\model\Question as QuestionModel;
 
-class Help extends BaseController
+class Question extends BaseController
 {
     public function create()
     {
         $data = input('param.');
-        $checkResult = validateData($data,'Help');
+        $checkResult = validateData($data,'Question');
         if ($checkResult === true) {
             $user_id = session('user.user_id');
             $user = UserModel::get($user_id);
             //存储
-            $result = $user->helps()->save([
+            $result = $user->questions()->save([
                 'content' => $data['content'],
-                'is_free' => $data['is_free'],
-                'askfor_type' => $data['askfor_type']
-                // todo 图片待存储
+                'type' => $data['type']
             ]);
             if ($result) {
                 return success();
@@ -40,27 +38,25 @@ class Help extends BaseController
             return error($checkResult);
         }
 
+
     }
 
-    public function update($help_id)
+    public function update($question_id)
     {
         $data = input('param.');
-        $checkResult = validateData($data,'Help');
+        $checkResult = validateData($data,'Question');
         if ($checkResult === true) {
             $user_id = session('user.user_id');
             $user = UserModel::get($user_id);
             //查找
-            $help = $user->helps()->where('help_id',$help_id)->find();
+            $question = $user->questions()->where('question_id',$question_id)->find();
             //验证
-            if (empty($help)){
-                return error('你没有此求助');
+            if (empty($question)){
+                return error('你没有此提问');
             }
-
-            $result = $help->save([
+            $result = $question->save([
                 'content' => $data['content'],
-                'is_free' => $data['is_free'],
-                'askfor_type' => $data['askfor_type']
-                // todo 图片待存储
+                'type' => $data['type']
             ]);
             if ($result) {
                 return success();
@@ -71,32 +67,24 @@ class Help extends BaseController
             return error($checkResult);
         }
 
+
     }
 
-    public function delete($help_id)
+    //待补充，逻辑删除
+    public function delete($question_id)
     {
         $user_id = session('user.user_id');
         $user = UserModel::get($user_id);
-        $help= $user->helps()->where('help_id',$help_id)->find();
-        if (empty($help)) {
+        $question= $user->questions()->where('question_id',$question_id)->find();
+        if (empty($question)) {
             return error('你没有此求助');
         } else {
-            $result = $help->delete();
+            $result = $question->delete();
             if ($result) {
                 return success();
             } else {
                 return error('删除失败');
             }
-        }
-    }
-
-    public function getOne($help_id)
-    {
-        $help = HelpModel::get($help_id);
-        if (!empty($help)) {
-            return success($help);
-        } else {
-            return error('你没有此求助');
         }
         
 
@@ -105,12 +93,23 @@ class Help extends BaseController
     public function getAll()
     {
         //todo 分页
-        $helps = HelpModel::all();
-        if (count($helps)) {
-            return success($helps);
+        $questions = QuestionModel::all();
+        if (count($questions)) {
+            return success($questions);
         } else {
             return error('你没有标签');
         }
+    }
+
+    public function getOne($question_id)
+    {
+        $question = QuestionModel::get($question_id);
+        if (!empty($question)) {
+            return success($question);
+        } else {
+            return error('没有此提问');
+        }
 
     }
+
 }
