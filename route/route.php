@@ -38,6 +38,16 @@ Route::group('api', function () {
     });
     Route::get('/helps','index/help/getAll');
 
+    Route::group('help_comment', function () {
+        Route::get('/:help_comment_id','index/helpComment/getOne');
+        Route::post('/','index/helpComment/create');
+        Route::delete('/:help_comment_id','index/helpComment/delete');
+    });
+    Route::get('help_comments/:help_id','index/helpComment/getAll');
+
+
+
+
 
 
 });

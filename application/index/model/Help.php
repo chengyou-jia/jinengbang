@@ -21,4 +21,9 @@ class Help extends BaseModel
         return $this->belongsTo('User');
     }
 
+    public function helpComments()
+    {
+        return $this->hasMany('HelpComment','help_id','help_id');
+    }
+
 }
