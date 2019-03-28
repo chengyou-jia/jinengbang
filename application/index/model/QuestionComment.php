@@ -11,6 +11,7 @@ namespace app\index\model;
 
 
 use app\index\common\BaseModel;
+use think\Db;
 
 class QuestionComment extends BaseModel
 {
@@ -34,6 +35,24 @@ class QuestionComment extends BaseModel
         $user->questionComments()->save([
             'content' =>$data['content'], 'prior' => $prior,'question_id'=>$data['question_id']
         ]);
+    }
+
+    static public function deleteWithPrior($question_comment_id)
+    {
+        // 启动事务
+        Db::startTrans();
+        try {
+            self::destroy($question_comment_id);
+            self::destroy(['prior' => $question_comment_id]);
+            // 提交事务
+            Db::commit();
+            return true;
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return false;
+        }
+
     }
 
 }

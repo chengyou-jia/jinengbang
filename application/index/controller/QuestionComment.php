@@ -47,5 +47,75 @@ class QuestionComment extends BaseController
             return error($checkResult);
         }
     }
+    
+    public function delete($question_comment_id)
+    {
+        $questionComment = QuestionCommentModel::get($question_comment_id);
+        if (empty($questionComment)) {
+            return error('此留言不存在');
+        }
+        if ($questionComment->user_id != session('user.user_id')) {
+            return error('无权操作');
+        }
+        //不同情况的删除
+        if ($questionComment->prior != -1) {
+            //非前驱
+            $result = $questionComment->delete();
+            if ($result) {
+                return success();
+            } else {
+                return error('删除失败');
+            }
+        } else {
+            //前驱 请用户确认，将删除其下所有
+            $result = questionCommentModel::deleteWithPrior($question_comment_id);
+            if ($result) {
+                return success();
+            } else {
+                return error('删除失败');
+            }
+
+        }
+
+    }
+
+    //某一前驱的所有后继
+    public function getOne($question_comment_id)
+    {
+        $questionComment = QuestionCommentModel::get($question_comment_id);
+        //验证
+        if (empty($questionComment)) {
+            return error('该评论不存在');
+        }
+        if ($questionComment->prior != -1) {
+            return error('非前驱评论');
+        }
+        //查找
+        $questionComment1 = questionCommentModel::get($question_comment_id);
+        $questionComments = questionCommentModel::where('prior',$question_comment_id)
+            ->select();
+        $questionComments = $questionComments->toArray();
+        array_push($questionComments,$questionComment1);
+        return success($questionComments);
+    }
+
+    //得到所有前驱
+    public function getAll($question_id)
+    {
+        // todo 分页
+        $question = questionModel::get($question_id);
+        if (empty($question)) {
+            return error('求助不存在');
+        }
+        $questionComment = questionCommentModel::where('question_id',$question_id)
+            ->where('prior',-1)
+            ->select();
+        if (count($questionComment)) {
+            return success($questionComment);
+        } else {
+            return error('没有留言');
+        }
+
+    }
 
 }

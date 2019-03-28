@@ -108,6 +108,7 @@ class HelpComment extends BaseController
             return error('求助不存在');
         }
         $helpComment = HelpCommentModel::where('help_id',$help_id)
+            ->where('prior',-1)
             ->select();
         if (count($helpComment)) {
             return success($helpComment);
