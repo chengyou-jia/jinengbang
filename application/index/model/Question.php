@@ -21,5 +21,10 @@ class Question extends BaseModel
     {
         return $this->belongsTo('User');
     }
+    
+    public function questionComments()
+    {
+        return $this->hasMany('questionComment','question_id','question_id');
+    }
 
 }

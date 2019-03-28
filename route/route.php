@@ -53,6 +53,13 @@ Route::group('api', function () {
     });
     Route::get('/questions','index/question/getAll');
 
+    Route::group('question_comment', function () {
+        Route::get('/:question_comment_id','index/questionComment/getOne');
+        Route::post('/','index/questionComment/create');
+        Route::delete('/:question_comment_id','index/questionComment/delete');
+    });
+    Route::get('question_comments/:question_id','index/questionComment/getAll');
+
 });
 
 Route::miss('index/index/miss');

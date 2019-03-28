@@ -3,8 +3,8 @@
  * Created by PhpStorm.
  * Author: 贾成铕
  * Email: jiachengyou@tiaozhan.com
- * Date: 2019/3/27
- * Time: 10:53
+ * Date: 2019/3/28
+ * Time: 15:25
  */
 
 namespace app\index\validate;
@@ -12,12 +12,11 @@ namespace app\index\validate;
 
 use think\Validate;
 
-class HelpComment extends Validate
+class QuestionComment extends Validate
 {
     protected $rule = [
         'content' => 'require',
-        'help_id' => 'require',
-        'help_comment_id' => 'length:0' //todo 此处验证
+        'question_id' => 'require'
     ];
 
     protected $message = [

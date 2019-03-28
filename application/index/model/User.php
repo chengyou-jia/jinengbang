@@ -37,6 +37,11 @@ class User extends BaseModel
         return $this->hasMany('HelpComment','user_id','user_id');
     }
 
+    public function questionComments()
+    {
+        return $this->hasMany('QuestionComment','user_id','user_id');
+    }
+
     public function isHadLabelType($type)
     {
         $result = $this->labels()->where('type',$type)->find();
