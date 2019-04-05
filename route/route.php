@@ -20,6 +20,7 @@ Route::group('api', function () {
         Route::put('/', 'index/user/update');
         Route::delete('/','index/user/delete');
         Route::get('login','index/user/login');
+        Route::post('certification','index/user/certification');
     });
 
     Route::group('label', function () {

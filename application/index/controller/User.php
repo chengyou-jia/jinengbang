@@ -100,4 +100,41 @@ class User extends BaseController
 
     }
 
+    public function certification()
+    {
+        //验证
+        $is_cert = session('user.is_cert');
+        if ($is_cert != 0) {
+            return error('当前状态无法提交申请');
+        }
+        // 上传文件
+        $file = request()->file('image');
+        if (empty($file)) {
+            return error('上传不能为空');
+        }
+        // 移动到框架应用根目录/uploads/certification 目录下
+        $info = $file->move( '../uploads/certification');
+        if($info){
+            // 成功上传后 存放上传信息
+            $user_id = session('user.user_id');
+            $user = UserModel::get($user_id);
+            $cert_photo = $info->getSaveName();
+            $is_cert = 1;
+            //保存
+            $user->cert_photo = $cert_photo;
+            $user->is_cert = $is_cert;
+            $result = $user->save();
+            if ($result) {
+                return success();
+            } else {
+                return error('提交失败');
+            }
+
+        }else{
+            // 上传失败获取错误信息
+            echo $file->getError();
+        }
+
+    }
+
 }
