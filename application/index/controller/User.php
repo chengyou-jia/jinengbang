@@ -137,4 +137,57 @@ class User extends BaseController
 
     }
 
+    public function adminAuditCert($user_id)
+    {
+        $isPass = input('isPass');
+        $user = UserModel::get($user_id);
+
+        //验证
+        if ($isPass != 0 and $isPass != 1) {
+            return error('参数错误');
+        }
+        if (empty($user)) {
+            return error('该用户不存在');
+        }
+        if ($user->is_cert != 1) {
+            return error('该用户不属于审核状态');
+        }
+
+        if ($isPass == 0) {
+            $user->is_cert = 0;
+            $result = $user->save();
+            if ($result) {
+                return success();
+            } else {
+                return error('更改失败');
+            }
+        } else {
+            $user->is_cert = 2;
+            $result = $user->save();
+            if ($result) {
+                return success();
+            } else {
+                return error('更改失败');
+            }
+        }
+
+
+    }
+
+    public function adminGetCert()
+    {
+        // 验证
+        if (!is_admin()) {
+            return error('没有权限');
+        }
+        $user = model('User');
+        $user  = $user->where('is_cert',1)->select();
+        if (count($user)) {
+            return success($user);
+        } else {
+            return error('没有内容');
+        }
+
+    }
+
 }

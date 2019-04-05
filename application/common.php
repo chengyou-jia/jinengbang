@@ -35,3 +35,15 @@ function validateData($data,$validate,$scene=null)
     }
 }
 
+// 管理员
+function is_admin()
+{
+    $role = session('user.role');
+    if ($role==1 or $role==2) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
