@@ -118,6 +118,7 @@ class User extends BaseController
             // 成功上传后 存放上传信息
             $user_id = session('user.user_id');
             $user = UserModel::get($user_id);
+            // todo 存储地址可能待定
             $cert_photo = $info->getSaveName();
             $is_cert = 1;
             //保存
