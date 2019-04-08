@@ -17,7 +17,8 @@
     ],
     "require": {
         "php": ">=5.6.0",
-        "topthink/framework": "5.1.*"
+        "topthink/framework": "5.1.*",
+        "dinghaoran/tz-api-client": "^1.1"
     },
     "autoload": {
         "psr-4": {
@@ -31,9 +32,5 @@
         "preferred-install": "dist"
     },
     "repositories": {
-        "tzapi": {
-            "type": "git",
-            "url": "git@git.tiaozhan.com:tiaozhan-dev/tz-api-client.git"
-        }
     }
 }

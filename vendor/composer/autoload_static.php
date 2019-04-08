@@ -9,6 +9,7 @@ class ComposerStaticInitd148befe644475c97c815c9521e43caf
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
+            'tiaozhan\\api\\client\\' => 20,
             'think\\composer\\' => 15,
         ),
         'a' => 
@@ -18,6 +19,10 @@ class ComposerStaticInitd148befe644475c97c815c9521e43caf
     );
 
     public static $prefixDirsPsr4 = array (
+        'tiaozhan\\api\\client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dinghaoran/tz-api-client/src',
+        ),
         'think\\composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-installer/src',

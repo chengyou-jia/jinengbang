@@ -1,5 +1,42 @@
 [
     {
+        "name": "dinghaoran/tz-api-client",
+        "version": "v1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "git@git.tiaozhan.com:tiaozhan-dev/tz-api-client.git",
+            "reference": "aa57ab589db442b96685ff50cabca4d2eda59a2c"
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "time": "2018-12-01T02:41:10+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "tiaozhan\\api\\client\\": "src/"
+            }
+        },
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "丁浩然",
+                "email": "dinghaoran@tiaozhan.com"
+            }
+        ],
+        "description": "tz-api-client",
+        "homepage": "https://www.tiaozhan.com/",
+        "keywords": [
+            "api",
+            "client",
+            "tz"
+        ]
+    },
+    {
         "name": "topthink/framework",
         "version": "v5.1.35",
         "version_normalized": "5.1.35.0",

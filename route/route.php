@@ -23,6 +23,13 @@ Route::group('api', function () {
         Route::post('certification', 'index/user/certification');
     });
 
+    Route::group('cas', function () {
+        Route::post('/', 'index/cas/login');
+        Route::post('callback', 'index/cas/callback');
+        Route::get('/', 'index/cas/userInfo');
+        Route::delete('/', 'index/cas/logout');
+    });
+
     Route::group('label', function () {
         Route::get('/:label_id', 'index/label/getOne');
         Route::post('/', 'index/label/create');
