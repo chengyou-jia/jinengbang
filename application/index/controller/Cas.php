@@ -66,5 +66,4 @@ class Cas
             return error('该账号与你的用户名不一致');
         }
     }
-
 }
