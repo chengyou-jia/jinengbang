@@ -112,4 +112,68 @@ class Question extends BaseController
 
     }
 
+    public function complaintQuestion($question_id)
+    {
+        $question = QuestionModel::get($question_id);
+        //验证
+        if (empty($question)) {
+            return error('该提问不存在');
+        }
+        if ($question->is_complaint == 1) {
+            return error('该提问已被投诉，请等待管理员处理');
+        }
+        // 操作
+        $question->is_complaint = 1;
+        $result = $question->save();
+        if ($result) {
+            return success();
+        } else {
+            return error();
+        }
+    }
+
+    public function adminGet()
+    {
+        $mode = input('mode');
+        // 验证
+        if (!is_admin())
+        {
+            return error('没有权限');
+        }
+        $question = new questionModel();
+        if ($mode == 'all') {
+            $question = $question->where(true)->select();
+        } elseif ($mode == 1) {
+            $question = $question->where('is_complaint',1)->select();
+        } else {
+            return error('参数错误');
+        }
+        $total = count($question);
+        if (!$total) {
+            return error('没有内容');
+        } else {
+            $data = array('total'=>$total,'data'=>$question);
+            return success($data);
+        }
+    }
+
+    public function adminDelete($question_id)
+    {
+        $question = questionModel::get($question_id);
+        //验证
+        if (empty($question)) {
+            return error('该提问不存在');
+        }
+        if (!is_admin()) {
+            return error('没有权限');
+        }
+        // 操作
+        $result = $question->delete();
+        if ($result) {
+            return success();
+        } else {
+            return error();
+        }
+    }
+
 }

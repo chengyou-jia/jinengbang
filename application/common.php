@@ -47,3 +47,14 @@ function is_admin()
 
 }
 
+// 是否是开发者
+function is_developer()
+{
+    $role = session('user.role');
+    if ($role==2) {
+        return true;
+    } else {
+        return false;
+    }
+}
+

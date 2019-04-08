@@ -29,5 +29,11 @@
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "repositories": {
+        "tzapi": {
+            "type": "git",
+            "url": "git@git.tiaozhan.com:tiaozhan-dev/tz-api-client.git"
+        }
     }
 }

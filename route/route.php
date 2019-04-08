@@ -38,6 +38,8 @@ Route::group('api', function () {
         Route::delete('/:help_id', 'index/help/delete');
     });
     Route::get('/helps', 'index/help/getAll');
+    Route::put('/complaintHelp/:help_id','index/help/complaintHelp');
+
 
     Route::group('help_comment', function () {
         Route::get('/:help_comment_id', 'index/helpComment/getOne');
@@ -53,6 +55,8 @@ Route::group('api', function () {
         Route::delete('/:question_id', 'index/question/delete');
     });
     Route::get('/questions', 'index/question/getAll');
+    Route::put('/complaintQuestion/:question_id','index/question/complaintQuestion');
+
 
     Route::group('question_comment', function () {
         Route::get('/:question_comment_id', 'index/questionComment/getOne');
@@ -66,6 +70,15 @@ Route::group('api', function () {
 
             Route::get('certification', 'index/user/adminGetCert');
             Route::put('certification/:user_id', 'index/user/adminAuditCert');
+        });
+
+        Route::group('help',function (){
+            Route::get('/','index/help/adminGet');
+            Route::delete('/:help_id','index/help/adminDelete');
+        });
+        Route::group('question',function (){
+            Route::get('/','index/question/adminGet');
+            Route::delete('/:question_id','index/question/adminDelete');
         });
 
     });
