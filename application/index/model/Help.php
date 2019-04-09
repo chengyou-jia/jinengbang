@@ -26,4 +26,9 @@ class Help extends BaseModel
         return $this->hasMany('HelpComment','help_id','help_id');
     }
 
+    public function applys()
+    {
+        return $this->hasMany('Apply','help_id','help_id');
+    }
+
 }
