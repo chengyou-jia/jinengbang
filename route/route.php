@@ -53,6 +53,8 @@ Route::group('api', function () {
         Route::get('/:help_id','index/apply/getApplyForHelp');
         Route::get('/','index/apply/getMyApply');
     });
+    Route::get('/applyConfirm/:help_id','index/apply/confirm');
+
 
     Route::group('help_comment', function () {
         Route::get('/:help_comment_id', 'index/helpComment/getOne');

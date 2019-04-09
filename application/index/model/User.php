@@ -11,6 +11,7 @@ namespace app\index\model;
 
 
 use app\index\common\BaseModel;
+use think\Db;
 
 class User extends BaseModel
 {
@@ -102,6 +103,32 @@ class User extends BaseModel
             }
         } else {
             return true;
+        }
+    }
+
+    // 确认 增加标签积分，改变报名状态，求助状态，消除其他报名状态
+    public function applyConfirm($help_id,$apply_id,$score)
+    {
+        // 启动事务
+        Db::startTrans();
+        try {
+            $help = Help::get($help_id);
+            $apply = Apply::get($apply_id);
+            $label_type = $help->askfor_type;
+            // todo
+            if () {
+                // 提交事务
+                Db::commit();
+                return true;
+            } else {
+                // 回滚事务
+                Db::rollback();
+                return false;
+            }
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return false;
         }
     }
 

@@ -13,6 +13,7 @@ namespace app\index\controller;
 use app\index\common\BaseController;
 use app\index\model\User as UserModel;
 use app\index\model\Help as HelpModel;
+use think\Validate;
 
 class Apply extends BaseController
 {
@@ -67,11 +68,59 @@ class Apply extends BaseController
 
     public function getMyApply()
     {
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
+        $apply = $user->applys()->select();
+        if (count($apply)) {
+            return success($apply);
+        } else {
+            return error('你没有报名');
+        }
 
     }
 
     public function delete($apply_id)
     {
+        $user_id  = session('user.user_id');
+        $user = UserModel::get($user_id);
+        $apply = $user->applys()->where('apply_id',$apply_id)->find();
+        //验证
+        if (empty($apply)) {
+            return error('你没有此报名');
+        }
+        if ($apply->status != 0) {
+            return error('此报名不能取消');
+        }
+        //处理
+        $result = $apply->delete();
+        if ($result) {
+            return success();
+        } else {
+            return error('取消失败');
+        }
+    }
+
+    public function confirm($help_id)
+    {
+
+        $score = input('score');
+        $num = array(0,1,2,3,4,5);
+        if (!in_array($score,$num)) {
+            return error('分数不符合要求');
+        }
+        $apply_id = input('apply_id');
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
+        $help = $user->helps()->where('help_id',$help_id)->find();
+        if (empty($help)) {
+            return error('没有此求助');
+        }
+        $apply = $help->applys()->where('apply_id',$apply_id)->find();
+        if (empty($apply)) {
+            return error('没有此报名');
+        }
+        // 处理 这个处理会很难写
+        $result = $user->applyConfirm($help_id,$apply_id,$score);
 
     }
 
