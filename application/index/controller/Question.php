@@ -104,12 +104,33 @@ class Question extends BaseController
     public function getOne($question_id)
     {
         $question = QuestionModel::get($question_id);
-        if (!empty($question)) {
-            return success($question);
+        if ($question) {
+            $question->browse = $question->browse + 1;
+            $result = $question->save();
+            if ($result) {
+                return success($question);
+            } else {
+                return error('获取失败');
+            }
+
         } else {
             return error('没有此提问');
         }
+    }
 
+    public function questionLike($question_id)
+    {
+        $question = QuestionModel::get($question_id);
+        if (empty($question)) {
+            return error('此求助不存在');
+        }
+        $question->like = $question->like + 1;
+        $result = $question->save();
+        if ($result) {
+            return success();
+        } else {
+            return error();
+        }
     }
 
     public function complaintQuestion($question_id)

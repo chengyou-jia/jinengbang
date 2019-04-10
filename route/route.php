@@ -46,6 +46,8 @@ Route::group('api', function () {
     });
     Route::get('/helps', 'index/help/getAll');
     Route::put('/complaintHelp/:help_id','index/help/complaintHelp');
+    Route::put('/helpLike/:help_id','index/help/helpLike');
+
 
     Route::group('apply',function () {
         Route::post('/:help_id','index/apply/create');
@@ -71,6 +73,7 @@ Route::group('api', function () {
     });
     Route::get('/questions', 'index/question/getAll');
     Route::put('/complaintQuestion/:question_id','index/question/complaintQuestion');
+    Route::put('/questionLike/:question_id','index/question/questionLike');
 
 
     Route::group('question_comment', function () {
@@ -106,6 +109,7 @@ Route::group('api', function () {
             Route::get('/','index/help/adminGet');
             Route::delete('/:help_id','index/help/adminDelete');
         });
+
         Route::group('question',function (){
             Route::get('/','index/question/adminGet');
             Route::delete('/:question_id','index/question/adminDelete');

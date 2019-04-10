@@ -93,8 +93,14 @@ class Help extends BaseController
     public function getOne($help_id)
     {
         $help = HelpModel::get($help_id);
-        if (!empty($help)) {
-            return success($help);
+        if ($help) {
+            $help->browse = $help->browse + 1;
+            $result = $help->save();
+            if ($result) {
+                return success($help);
+            } else {
+                return error('获取失败');
+            }
         } else {
             return error('你没有此求助');
         }
@@ -112,6 +118,21 @@ class Help extends BaseController
             return error('你没有标签');
         }
 
+    }
+
+    public function helpLike($help_id)
+    {
+        $help = HelpModel::get($help_id);
+        if (empty($help)) {
+            return error('此求助不存在');
+        }
+        $help->like = $help->like + 1;
+        $result = $help->save();
+        if ($result) {
+            return success();
+        } else {
+            return error();
+        }
     }
 
     public function complaintHelp($help_id)
