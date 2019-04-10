@@ -10,10 +10,26 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-04-06 11:12:06
+Date: 2019-04-10 16:02:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for apply
+-- ----------------------------
+DROP TABLE IF EXISTS `apply`;
+CREATE TABLE `apply` (
+  `apply_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `help_id` int(11) NOT NULL,
+  `status` enum('1','2','0') NOT NULL DEFAULT '0' COMMENT '0表示待确认，1为成功,2为失败',
+  `score` int(11) NOT NULL DEFAULT '0' COMMENT '得分,不通过为0分',
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `delete_time` datetime NOT NULL,
+  PRIMARY KEY (`apply_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help
@@ -31,10 +47,14 @@ CREATE TABLE `help` (
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
-  `is_free` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0代表有酬，1代表无酬',
+  `is_free` enum('1','3','2','0') NOT NULL DEFAULT '0' COMMENT '0代表有酬，1代表无酬，2代表工时，3代表其他',
   `askfor_type` enum('4','3','2','1','0') NOT NULL,
+  `is_complaint` enum('1','0') NOT NULL DEFAULT '0' COMMENT '1表示被投诉',
+  `type` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0为需要个人，1为需要多人',
+  `title` varchar(255) NOT NULL,
+  `has_finshed` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未完成',
   PRIMARY KEY (`help_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help_comment
@@ -66,7 +86,22 @@ CREATE TABLE `label` (
   `delete_time` datetime NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`label_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for message
+-- ----------------------------
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
+  `message_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `delete_time` datetime NOT NULL,
+  `is_office` enum('1','0') NOT NULL DEFAULT '1' COMMENT '1为官方消息',
+  PRIMARY KEY (`message_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question
@@ -84,6 +119,7 @@ CREATE TABLE `question` (
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
+  `is_complaint` enum('1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
@@ -104,6 +140,22 @@ CREATE TABLE `question_comment` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for suggestion
+-- ----------------------------
+DROP TABLE IF EXISTS `suggestion`;
+CREATE TABLE `suggestion` (
+  `suggestion_id` int(255) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `delete_time` datetime NOT NULL,
+  `reply` varchar(255) DEFAULT NULL,
+  `status` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0代表为被回复',
+  PRIMARY KEY (`suggestion_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -122,5 +174,6 @@ CREATE TABLE `user` (
   `delete_time` datetime NOT NULL,
   `cert_photo` varchar(255) DEFAULT NULL,
   `role` enum('2','1','0') NOT NULL DEFAULT '0' COMMENT '0为普通用户 1为管理员 2为开发者兼管理员',
+  `new_message` enum('1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
