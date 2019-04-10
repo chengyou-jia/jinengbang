@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-04-10 16:02:52
+Date: 2019-04-10 21:08:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,13 +48,14 @@ CREATE TABLE `help` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   `is_free` enum('1','3','2','0') NOT NULL DEFAULT '0' COMMENT '0代表有酬，1代表无酬，2代表工时，3代表其他',
-  `askfor_type` enum('4','3','2','1','0') NOT NULL,
+  `askfor_type` enum('4','3','2','1','0') NOT NULL COMMENT '0为其他,1为学霸大神，2为艺术天才，3为技术大佬，4为生活雷锋',
   `is_complaint` enum('1','0') NOT NULL DEFAULT '0' COMMENT '1表示被投诉',
   `type` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0为需要个人，1为需要多人',
   `title` varchar(255) NOT NULL,
   `has_finshed` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未完成',
+  `publisher` enum('2','1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`help_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help_comment
@@ -65,12 +66,12 @@ CREATE TABLE `help_comment` (
   `user_id` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
   `prior` int(11) NOT NULL DEFAULT '-1',
+  `help_id` int(11) NOT NULL,
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
-  `help_id` int(11) NOT NULL,
   PRIMARY KEY (`help_comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for label
@@ -100,8 +101,9 @@ CREATE TABLE `message` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   `is_office` enum('1','0') NOT NULL DEFAULT '1' COMMENT '1为官方消息',
+  `status` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未读，1表示已读',
   PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question
@@ -110,18 +112,18 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `question_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `type` enum('1','0') NOT NULL,
+  `type` enum('1','2','3','0') NOT NULL DEFAULT '0' COMMENT '0提问 1吐槽 2表白 3其他',
   `content` varchar(255) NOT NULL,
   `picture` varchar(255) DEFAULT NULL,
   `like` int(11) NOT NULL DEFAULT '0',
   `browse` int(11) NOT NULL DEFAULT '0',
   `reply` int(11) NOT NULL DEFAULT '0',
+  `is_complaint` enum('1','0') NOT NULL DEFAULT '0',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
-  `is_complaint` enum('1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question_comment
@@ -131,13 +133,13 @@ CREATE TABLE `question_comment` (
   `question_comment_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
+  `question_id` int(11) NOT NULL,
   `prior` int(11) NOT NULL DEFAULT '-1',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
-  `question_id` int(11) NOT NULL,
   PRIMARY KEY (`question_comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for suggestion
@@ -172,7 +174,6 @@ CREATE TABLE `user` (
   `update_time` datetime NOT NULL,
   `create_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
-  `cert_photo` varchar(255) DEFAULT NULL,
   `role` enum('2','1','0') NOT NULL DEFAULT '0' COMMENT '0为普通用户 1为管理员 2为开发者兼管理员',
   `new_message` enum('1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
