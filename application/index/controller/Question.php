@@ -156,7 +156,7 @@ class Question extends BaseController
     public function adminGet()
     {
         $mode = input('mode');
-        // 验证 。
+        // 验证
         if (!is_admin())
         {
             return error('没有权限');
