@@ -80,6 +80,13 @@ Route::group('api', function () {
     });
     Route::get('question_comments/:question_id', 'index/questionComment/getAll');
 
+    Route::group('suggestion', function () {
+        Route::get('/:suggestion_id', 'index/suggestion/getOne');
+        Route::post('/', 'index/suggestion/create');
+        Route::delete('/:suggestion_id', 'index/suggestion/delete');
+    });
+    Route::get('/suggestions', 'index/suggestion/getAll');
+
     Route::group('admin', function () {
         Route::group('user', function () {
 
@@ -95,6 +102,10 @@ Route::group('api', function () {
             Route::get('/','index/question/adminGet');
             Route::delete('/:question_id','index/question/adminDelete');
         });
+        Route::group('suggestion',function (){
+            Route::put('/reply/:suggestion_id','index/suggestion/reply');
+        });
+
 
     });
 

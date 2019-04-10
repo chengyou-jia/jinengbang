@@ -53,6 +53,11 @@ class User extends BaseModel
         return $this->hasMany('Message','user_id','user_id');
     }
 
+    public function suggestions()
+    {
+        return $this->hasMany('Suggestion','user_id','user_id');
+    }
+
     public function isHadLabelType($type)
     {
         $result = $this->labels()->where('type',$type)->find();
