@@ -112,11 +112,46 @@ class User extends BaseModel
         // 启动事务
         Db::startTrans();
         try {
+            $user_id = session('user.user_id');
+            $user = User::get($user_id);
             $help = Help::get($help_id);
             $apply = Apply::get($apply_id);
+            $apply_user_id = $apply->user_id;
             $label_type = $help->askfor_type;
-            // todo
-            if () {
+            //改变报名状态,消除其他报名状态
+            $apply->status = 1;
+            $apply->score = $score;
+            $result1 = $apply->save();
+            $apply = $help->applys()->where('apply_id','neq',$apply_id)
+                ->where('status',0)->find();
+            $err = false;
+            while ($apply) {
+                $apply->status = 2;
+                $result = $apply->save();
+                if ($result) {
+                    $apply = $help->applys()->where('apply_id','neq',$apply_id)
+                        ->where('status',0)->find();
+                } else {
+                    $err = true;
+                    break;
+                }
+            }
+            if ($err) {
+                $result2 = false;
+            } else {
+                $result2 = true;
+            }
+
+            //改变求助状态
+            $help->has_finshed = 1;
+            $result3 = $help->save();
+
+            //增加标签积分
+            $label = $user->labels()->where('type',$label_type)->find();
+            $label->score = $label->score + $score;
+            $result4 = $label->save();
+
+            if ($result1 and $result2 and $result3 and $result4) {
                 // 提交事务
                 Db::commit();
                 return true;

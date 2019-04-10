@@ -19,10 +19,10 @@ class Apply extends BaseController
 {
     public function create($help_id)
     {
-
         $user_id = session('user.user_id');
         $user  = UserModel::get($user_id);
         $help = HelpModel::get($help_id);
+
         // 验证
         if (empty($help)) {
             return error('此求助不存在');
@@ -32,6 +32,10 @@ class Apply extends BaseController
         }
         if ($help->user_id == $user_id) {
             return error('你不能报名自己的求助');
+        }
+        $label = $user->labels()->where('type',$help->askfor_type)->find();
+        if (empty($label)) {
+            return error('你没有此标签');
         }
         //处理
         $apply = model('Apply');
@@ -121,6 +125,11 @@ class Apply extends BaseController
         }
         // 处理 这个处理会很难写
         $result = $user->applyConfirm($help_id,$apply_id,$score);
+        if ($result) {
+            return success();
+        } else {
+            return error();
+        }
 
     }
 
