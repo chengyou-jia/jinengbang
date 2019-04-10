@@ -87,6 +87,14 @@ Route::group('api', function () {
     });
     Route::get('/suggestions', 'index/suggestion/getAll');
 
+    Route::group('message', function () {
+        Route::get('/:message_id', 'index/message/getOne');
+        Route::put('/allRead','index/message/allRead');
+    });
+    Route::get('/messages', 'index/message/getAll');
+    
+    
+
     Route::group('admin', function () {
         Route::group('user', function () {
 

@@ -30,11 +30,35 @@ class QuestionComment extends BaseModel
 
     public function saveComment($data,$prior)
     {
-        $user_id = session('user.user_id');
-        $user = User::get($user_id);
-        $user->questionComments()->save([
-            'content' =>$data['content'], 'prior' => $prior,'question_id'=>$data['question_id']
-        ]);
+        // 启动事务
+        Db::startTrans();
+        try {
+            $question_id = $data['question_id'];
+            $user_id = session('user.user_id');
+            $user = User::get($user_id);
+            $result1 = $user->questionComments()->save([
+                'content' =>$data['content'], 'prior' => $prior,'question_id'=>$data['question_id']
+            ]);
+            $question = Question::get($question_id);
+            $question_user_id = $question->user_id;
+            $content = '你有提问被回复了，快去看看吧';
+            $result2 = Message::addContent($content,$question_user_id);
+
+            // 提交事务
+            if ($result1 and $result2) {
+                Db::commit();
+                return true;
+            } else {
+                // 回滚事务
+                Db::rollback();
+                return false;
+            }
+
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return false;
+        }
     }
 
     static public function deleteWithPrior($question_comment_id)
@@ -52,7 +76,6 @@ class QuestionComment extends BaseModel
             Db::rollback();
             return false;
         }
-
     }
 
 }

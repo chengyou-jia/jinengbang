@@ -172,4 +172,45 @@ class User extends BaseModel
         }
     }
 
+    //全部消息设为已读
+    public function allRead()
+    {
+        // 启动事务
+        Db::startTrans();
+        try {
+            $err = false;
+            $message = $this->messages()->where('status',0)->find();
+            while ($message) {
+                $message->status = 1;
+                $result = $message->save();
+                if ($result) {
+                    $message = $this->messages()->where('status',0)->find();
+                } else {
+                    $err = true;
+                    break;
+                }
+            }
+            if ($err) {
+                $result = false;
+            } else {
+                $result = true;
+            }
+
+            if ($result) {
+                // 提交事务
+                Db::commit();
+                return true;
+            } else {
+                // 回滚事务
+                Db::rollback();
+                return false;
+            }
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return false;
+        }
+
+    }
+
 }
