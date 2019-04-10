@@ -41,11 +41,13 @@ class QuestionComment extends BaseModel
             ]);
             $question = Question::get($question_id);
             $question_user_id = $question->user_id;
+            $question->reply = $question->reply + 1;
+            $result2 = $question->save();
             $content = '你有提问被回复了，快去看看吧';
-            $result2 = Message::addContent($content,$question_user_id);
+            $result3 = Message::addContent($content,$question_user_id);
 
             // 提交事务
-            if ($result1 and $result2) {
+            if ($result1 and $result2 and $result3) {
                 Db::commit();
                 return true;
             } else {
