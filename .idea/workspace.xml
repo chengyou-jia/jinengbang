@@ -18,7 +18,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/route/route.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-608">
+            <state relative-caret-position="1800">
               <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
             </state>
           </provider>
@@ -27,18 +27,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/index/controller/Help.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="122" column="3" lean-forward="true" selection-start-line="122" selection-start-column="3" selection-end-line="135" selection-end-column="5" />
+            <state relative-caret-position="2160">
+              <caret line="122" column="3" selection-start-line="122" selection-start-column="3" selection-end-line="135" selection-end-column="5" />
               <folding>
                 <element signature="e#157#193#0#PHP" expanded="true" />
                 <element signature="e#313#1023#0#PHP" />
                 <element signature="e#1029#1911#0#PHP" />
                 <element signature="e#1917#2377#0#PHP" />
-                <element signature="e#2383#2821#0#PHP" />
-                <element signature="e#2612#2829#0#PHP" />
-                <element signature="e#2835#3299#0#PHP" />
-                <element signature="e#3305#3943#0#PHP" />
-                <element signature="e#3949#4355#0#PHP" />
               </folding>
             </state>
           </provider>
@@ -47,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/index/controller/Question.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="158" column="13" lean-forward="true" selection-start-line="158" selection-start-column="13" selection-end-line="158" selection-end-column="13" />
+            <state relative-caret-position="472">
+              <caret line="169" column="33" lean-forward="true" selection-start-line="169" selection-start-column="33" selection-end-line="169" selection-end-column="33" />
               <folding>
                 <element signature="e#157#193#0#PHP" expanded="true" />
               </folding>
@@ -147,55 +142,7 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="jinengbang" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jinengbang" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jinengbang" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jinengbang" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jinengbang" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jinengbang" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jinengbang" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jinengbang" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jinengbang" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jinengbang" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jinengbang" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jinengbang" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jinengbang" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jinengbang" type="462c0819:PsiDirectoryNode" />
-              <item name="route" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -271,6 +218,7 @@
       <workItem from="1554819410123" duration="3243000" />
       <workItem from="1554874186810" duration="8866000" />
       <workItem from="1554890978188" duration="6115000" />
+      <workItem from="1554901729120" duration="60000" />
     </task>
     <task id="LOCAL-00001" summary="更改基本框架 包括common和index模块">
       <created>1553481294253</created>
@@ -489,11 +437,18 @@
       <option name="project" value="LOCAL" />
       <updated>1554901669528</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="更新数据库">
+      <created>1554901742885</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1554901742885</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86861000" />
+    <option name="totallyTimeSpent" value="86921000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1455" height="935" extended-state="6" />
@@ -563,14 +518,14 @@
     <MESSAGE value="明天再写吧" />
     <MESSAGE value="报名部分基本完成" />
     <MESSAGE value="新增建议部分" />
-    <MESSAGE value="更新数据库" />
     <MESSAGE value="更新消息部分" />
     <MESSAGE value="更改reply的累加" />
     <MESSAGE value="新增点赞部分" />
     <MESSAGE value="git测试" />
     <MESSAGE value="测试完了" />
     <MESSAGE value="增加数据库文档" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加数据库文档" />
+    <MESSAGE value="更新数据库" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新数据库" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -907,33 +862,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/route/route.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-608">
+        <state relative-caret-position="1800">
           <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/index/controller/Help.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="122" column="3" lean-forward="true" selection-start-line="122" selection-start-column="3" selection-end-line="135" selection-end-column="5" />
+        <state relative-caret-position="2160">
+          <caret line="122" column="3" selection-start-line="122" selection-start-column="3" selection-end-line="135" selection-end-column="5" />
           <folding>
             <element signature="e#157#193#0#PHP" expanded="true" />
             <element signature="e#313#1023#0#PHP" />
             <element signature="e#1029#1911#0#PHP" />
             <element signature="e#1917#2377#0#PHP" />
-            <element signature="e#2383#2821#0#PHP" />
-            <element signature="e#2612#2829#0#PHP" />
-            <element signature="e#2835#3299#0#PHP" />
-            <element signature="e#3305#3943#0#PHP" />
-            <element signature="e#3949#4355#0#PHP" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/index/controller/Question.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="158" column="13" lean-forward="true" selection-start-line="158" selection-start-column="13" selection-end-line="158" selection-end-column="13" />
+        <state relative-caret-position="472">
+          <caret line="169" column="33" lean-forward="true" selection-start-line="169" selection-start-column="33" selection-end-line="169" selection-end-column="33" />
           <folding>
             <element signature="e#157#193#0#PHP" expanded="true" />
           </folding>
