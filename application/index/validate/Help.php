@@ -20,7 +20,6 @@ class Help extends Validate
         'askfor_type' => 'require|in:0,1,2,3,4',// todo 类型验证
         'is_free' => 'require|in:0,1',
         'type' => 'require|in:0,1',
-        'publisher' => 'require|in:0,1,2'
     ];
 
     protected $message = [
