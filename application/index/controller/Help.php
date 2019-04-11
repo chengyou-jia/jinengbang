@@ -25,9 +25,12 @@ class Help extends BaseController
             $user = UserModel::get($user_id);
             //存储
             $result = $user->helps()->save([
+                'title' => $data['title'],
                 'content' => $data['content'],
                 'is_free' => $data['is_free'],
-                'askfor_type' => $data['askfor_type']
+                'askfor_type' => $data['askfor_type'],
+                'type' => $data['type'],
+                'publisher' => $data['publisher']
                 // todo 图片待存储
             ]);
             if ($result) {
@@ -57,9 +60,12 @@ class Help extends BaseController
             }
 
             $result = $help->save([
+                'title' => $data['title'],
                 'content' => $data['content'],
                 'is_free' => $data['is_free'],
-                'askfor_type' => $data['askfor_type']
+                'askfor_type' => $data['askfor_type'],
+                'type' => $data['type'],
+                'publisher' => $data['publisher']
                 // todo 图片待存储
             ]);
             if ($result) {
