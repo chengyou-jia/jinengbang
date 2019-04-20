@@ -37,6 +37,12 @@ Route::group('api', function () {
         Route::delete('/:label_id', 'index/label/delete');
     });
     Route::get('/labels', 'index/label/getAll');
+    Route::get('/getAllRank','index/label/getAllRank');
+    Route::get('/getScoreSumRank','index/label/getScoreSumRank');
+    Route::get('/myRank','index/label/myRank');
+
+
+
 
     Route::group('help', function () {
         Route::get('/:help_id', 'index/help/getOne');

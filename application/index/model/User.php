@@ -111,17 +111,16 @@ class User extends BaseModel
         }
     }
 
-    // 确认 增加标签积分，改变报名状态，求助状态，消除其他报名状态
+    // 确认 增加标签积分，改变报名状态，求助状态，消除其他报名状态 改变user转态
     public function applyConfirm($help_id,$apply_id,$score)
     {
         // 启动事务
         Db::startTrans();
         try {
-            $user_id = session('user.user_id');
-            $user = User::get($user_id);
             $help = Help::get($help_id);
             $apply = Apply::get($apply_id);
             $apply_user_id = $apply->user_id;
+            $user = User::get($apply_user_id);
             $label_type = $help->askfor_type;
             //改变报名状态,消除其他报名状态
             $apply->status = 1;
@@ -156,7 +155,17 @@ class User extends BaseModel
             $label->score = $label->score + $score;
             $result4 = $label->save();
 
-            if ($result1 and $result2 and $result3 and $result4) {
+            //改变user score
+            $user->score = $user->score + $score;
+            $result5 = $user->save();
+
+            //new_message
+            $content = '你有一个报名被确认，你增加了相应的积分，快去看看吧';
+            $result6 = Message::addContent($content,$apply_user_id);
+            $result7 = User::hasNewMessage($apply_user_id);
+            if ($result1 and $result2 and
+                $result3 and $result4 and
+                $result5 and $result6 and $result7) {
                 // 提交事务
                 Db::commit();
                 return true;

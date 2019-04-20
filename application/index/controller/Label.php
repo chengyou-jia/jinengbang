@@ -16,6 +16,7 @@ use app\index\model\User as UserModel;
 
 class Label extends BaseController
 {
+    static protected $typeSum = 4;
 
     public function create()
     {
@@ -111,6 +112,56 @@ class Label extends BaseController
         }
 
 
+    }
+
+    public function getAllRank()
+    {
+        $arr = [];
+        // todo 待定类型
+        $label = model('Label');
+        for ($i = 1; $i < self::$typeSum + 1; $i++) {
+            $data = $label->getLabelRank($i);
+            array_push($arr,$data);
+        }
+        return success($arr);
+    }
+
+    public function getScoreSumRank()
+    {
+        $user = model('User');
+        $user = $user->where(true)->limit(10)
+            ->order('score','desc')->select();
+        return success($user);
+    }
+
+    public function myRank()
+    {
+        $arr = [];
+        $user_id = session('user.user_id');
+        $user = model('User');
+        $user = $user->where(true)->limit(30)
+            ->order('score','desc')->select();
+        $rank = false;
+        $score = 0;
+        for ($i = 0; $i < count($user); $i++) {
+            if ($user[$i]['user_id'] == $user_id) {
+                $rank = $i+1;
+                $score = $user[$i]['score'];
+                break;
+            }
+        }
+        $scoreSum = array('rank'=>$rank,'score'=>$score);
+        array_push($arr,$scoreSum);
+        $label = model('Label');
+        for ($i = 1; $i < self::$typeSum + 1; $i++) {
+            $data = $label->getMyRank($i);
+            array_push($arr,$data);
+        }
+        $user = UserModel::get($user_id);
+        $help_num = $user->help_num;
+        $help_num_arr = array('help_num'=>$help_num);
+        array_push($arr,$help_num_arr);
+        return success($arr);
     }
 
 
