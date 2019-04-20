@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-04-10 21:08:28
+Date: 2019-04-20 18:40:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -55,7 +55,7 @@ CREATE TABLE `help` (
   `has_finshed` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未完成',
   `publisher` enum('2','1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`help_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help_comment
@@ -122,8 +122,10 @@ CREATE TABLE `question` (
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
+  `is_anonymous` enum('1','0') NOT NULL DEFAULT '0' COMMENT '是否匿名 0非1匿',
+  `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`question_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question_comment
@@ -153,7 +155,7 @@ CREATE TABLE `suggestion` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   `reply` varchar(255) DEFAULT NULL,
-  `status` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0代表为被回复',
+  `status` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0代表为未被回复',
   PRIMARY KEY (`suggestion_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -176,5 +178,10 @@ CREATE TABLE `user` (
   `delete_time` datetime NOT NULL,
   `role` enum('2','1','0') NOT NULL DEFAULT '0' COMMENT '0为普通用户 1为管理员 2为开发者兼管理员',
   `new_message` enum('1','0') NOT NULL DEFAULT '0',
+  `gender` enum('1','0') NOT NULL COMMENT '0表示男性1表示女性',
+  `major` varchar(255) NOT NULL,
+  `grade` varchar(255) NOT NULL,
+  `qq` int(11) NOT NULL,
+  `intro` varchar(255) DEFAULT NULL COMMENT '个人介绍',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;

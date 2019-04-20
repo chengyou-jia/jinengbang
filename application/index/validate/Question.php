@@ -17,6 +17,8 @@ class Question extends Validate
     protected $rule = [
         'content' => 'require',
         'type' => 'require',// todo 类型验证
+        'title' => 'require',
+        'is_anonymous' => 'require|in:0,1'
     ];
 
     protected $message = [

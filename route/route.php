@@ -77,6 +77,9 @@ Route::group('api', function () {
     Route::get('/questions', 'index/question/getAll');
     Route::put('/complaintQuestion/:question_id','index/question/complaintQuestion');
     Route::put('/questionLike/:question_id','index/question/questionLike');
+    Route::get('/getAllQuestions','index/question/getAllQuestions');
+    Route::get('/getQuestionsByWord','index/question/getQuestionsByWord');
+
 
 
     Route::group('question_comment', function () {

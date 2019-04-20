@@ -167,7 +167,6 @@ class Help extends BaseController
         } else {
             return error('没有内容');
         }
-
     }
 
     public function helpLike($help_id)

@@ -26,7 +26,9 @@ class Question extends BaseController
             //存储
             $result = $user->questions()->save([
                 'content' => $data['content'],
-                'type' => $data['type']
+                'type' => $data['type'],
+                'is_anonymous' => $data['is_anonymous'],
+                'title' => $data['title']
             ]);
             if ($result) {
                 return success();
@@ -56,7 +58,9 @@ class Question extends BaseController
             }
             $result = $question->save([
                 'content' => $data['content'],
-                'type' => $data['type']
+                'type' => $data['type'],
+                'is_anonymous' => $data['is_anonymous'],
+                'title' => $data['title']
             ]);
             if ($result) {
                 return success();
@@ -153,6 +157,39 @@ class Question extends BaseController
         }
     }
 
+    public function getAllQuestions()
+    {
+        $type = input('type');
+        $is_anonymous = input('is_anonymous');
+        $question = new QuestionModel();
+        $question = $question->where(true);
+        if ($type != 'all') {
+            $question = $question->where('type',$type);
+        }
+        if ($is_anonymous != 'all') {
+            $question = $question->where('is_anonymous',$is_anonymous)->select();
+        } else {
+            $question = $question->where(true)->select();
+        }
+        if (count($question)) {
+            return success($question);
+        } else {
+            return error('没有内容');
+        }
+    }
+
+    public function getQuestionsByWord()
+    {
+        $word = input('word');
+        $question = new QuestionModel();
+        $question = $question->where('title|content','like','%'.$word.'%')->select();
+        if (count($question)) {
+            return success($question);
+        } else {
+            return error('没有内容');
+        }
+    }
+
     public function adminGet()
     {
         $mode = input('mode');
@@ -161,7 +198,7 @@ class Question extends BaseController
         {
             return error('没有权限');
         }
-        $question = new questionModel();
+        $question = new QuestionModel();
         if ($mode == 'all') {
             $question = $question->where(true)->select();
         } elseif ($mode == 1) {
