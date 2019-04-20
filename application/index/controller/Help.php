@@ -115,13 +115,46 @@ class Help extends BaseController
     public function getAll()
     {
         //todo 分页
-        $helps = HelpModel::all();
+        $type = input('has_finshed');
+        $help = new HelpModel();
+        if ($type == 0) {
+            $helps = $help->where('has_finshed',0)->select();
+        } else if ($type == 1) {
+            $helps = $help->where('has_finshed',1)->select();
+        } else {
+            return error('参数错误');
+        }
         if (count($helps)) {
             return success($helps);
         } else {
-            return error('你没有标签');
+            return error('你没有求助');
         }
 
+    }
+
+    public function getAllHelps()
+    {
+        $is_free = input('is_free');
+        $askfor_type = input('askfor_type');
+        $publisher = input('publisher');
+        $help = new HelpModel();
+        $help = $help->where(true);
+        if ($askfor_type != 'all') {
+            $help = $help->where('askfor_type',$askfor_type);
+        }
+        if ($is_free != 'all') {
+            $help = $help->where('is_free',$is_free);
+        }
+        if ($publisher != 'all') {
+            $help = $help->where('publisher',$publisher)->select();
+        } else {
+            $help = $help->where(true)->select();
+        }
+        if (count($help)) {
+            return success($help);
+        } else {
+            return error('没有内容');
+        }
     }
 
     public function helpLike($help_id)

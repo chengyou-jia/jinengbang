@@ -45,8 +45,10 @@ Route::group('api', function () {
         Route::delete('/:help_id', 'index/help/delete');
     });
     Route::get('/helps', 'index/help/getAll');
+    Route::get('/getAllHelps','index/help/getAllHelps');
     Route::put('/complaintHelp/:help_id','index/help/complaintHelp');
     Route::put('/helpLike/:help_id','index/help/helpLike');
+
 
 
     Route::group('apply',function () {
