@@ -53,8 +53,11 @@ class Cas
         }
         // 处理
         $user_name = $data['userinfo']['username'];
+        $gender = $data['userinfo']['sex'];
         $user = UserModel::get(session('user.user_id'));
-        if ($user_name == $user->user_name) {
+        $genderArr = ['男','女'];
+        $code = $user->gender;
+        if ($user_name == $user->user_name and $gender == $genderArr[$code]) {
             $user->is_cert = 1;
             $result = $user->save();
             if ($result) {
@@ -63,7 +66,7 @@ class Cas
                 return error('认证失败');
             }
         } else {
-            return error('该账号与你的用户名不一致');
+            return error('该账号与你的用户名或性别不一致');
         }
     }
 }

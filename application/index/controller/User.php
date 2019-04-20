@@ -50,6 +50,12 @@ class User extends BaseController
         $data = input('param.');
         $checkResult = validateData($data,'User');
        if ($checkResult === true) {
+           // 验证是否已经注册
+           $user = model('User');
+           $user = $user->where('wechat_id',$data['wechat_id'])->find();
+           if ($user) {
+               return error('已经注册');
+           }
            $user = model('User');
            $result = $user->allowField(true)->save($data);
            $user_id = $user->user_id; //再次查找存session
@@ -79,6 +85,11 @@ class User extends BaseController
         $data = input('param.');
         $checkResult = validateData($data,'User');
         if ($checkResult === true) {
+            $is_cert = $user->is_cert;
+            if ($is_cert) {
+                unset($data['user_name']);
+                unset($data['gender']);
+            }
             $result = $user->allowField(true)->save($data);
             $user_id = $user->user_id; //再次查找存session
             if ($result) {

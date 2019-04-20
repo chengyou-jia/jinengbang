@@ -19,7 +19,12 @@ class User extends Validate
         'nickname|昵称' => 'require|max:25',
         'wechat|微信号' => 'require',
         'mobile|手机号' => 'require|number|length:6,11',
-        'wechat_id|微信id' => 'require'
+        'wechat_id|微信id' => 'require',
+        'qq|QQ' => 'require|length:6,10',
+        'gender' => 'require|in:0,1',
+        'major' => 'require',
+        'grade' => 'require',
+
     ];
 
     protected $message = [
