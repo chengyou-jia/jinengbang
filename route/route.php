@@ -48,6 +48,7 @@ Route::group('api', function () {
     Route::get('/getAllHelps','index/help/getAllHelps');
     Route::put('/complaintHelp/:help_id','index/help/complaintHelp');
     Route::put('/helpLike/:help_id','index/help/helpLike');
+    Route::get('/getHelpsByWord','index/help/getHelpsByWord');
 
 
 

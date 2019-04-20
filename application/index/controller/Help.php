@@ -157,6 +157,19 @@ class Help extends BaseController
         }
     }
 
+    public function getHelpsByWord()
+    {
+        $word = input('word');
+        $help = new HelpModel();
+        $help = $help->where('title|content','like','%'.$word.'%')->select();
+        if (count($help)) {
+            return success($help);
+        } else {
+            return error('没有内容');
+        }
+
+    }
+
     public function helpLike($help_id)
     {
         $help = HelpModel::get($help_id);
