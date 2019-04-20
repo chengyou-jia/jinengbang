@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-04-20 18:40:54
+Date: 2019-04-20 21:04:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `apply` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   PRIMARY KEY (`apply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help
@@ -87,7 +87,7 @@ CREATE TABLE `label` (
   `delete_time` datetime NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`label_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for message
@@ -103,7 +103,7 @@ CREATE TABLE `message` (
   `is_office` enum('1','0') NOT NULL DEFAULT '1' COMMENT '1为官方消息',
   `status` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未读，1表示已读',
   PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question
@@ -183,5 +183,7 @@ CREATE TABLE `user` (
   `grade` varchar(255) NOT NULL,
   `qq` int(11) NOT NULL,
   `intro` varchar(255) DEFAULT NULL COMMENT '个人介绍',
+  `score` int(11) NOT NULL DEFAULT '0' COMMENT '总积分',
+  `help_num` int(11) NOT NULL DEFAULT '0' COMMENT '总帮助次数',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
