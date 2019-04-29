@@ -159,6 +159,12 @@ class Question extends BaseController
 
     public function getAllQuestions()
     {
+        $page = input('page');
+        if ($page < 1) {
+            return error('参数错误');
+        }
+        $limit = input('limit');
+        $start = ($page - 1) * $limit;
         $type = input('type');
         $is_anonymous = input('is_anonymous');
         $question = new QuestionModel();
@@ -167,9 +173,9 @@ class Question extends BaseController
             $question = $question->where('type',$type);
         }
         if ($is_anonymous != 'all') {
-            $question = $question->where('is_anonymous',$is_anonymous)->select();
+            $question = $question->where('is_anonymous',$is_anonymous)->limit($start,$limit)->select();
         } else {
-            $question = $question->where(true)->select();
+            $question = $question->where(true)->limit($start,$limit)->select();
         }
         if (count($question)) {
             return success($question);
@@ -192,6 +198,12 @@ class Question extends BaseController
 
     public function adminGet()
     {
+        $page = input('page');
+        if ($page < 1) {
+            return error('参数错误');
+        }
+        $limit = input('limit');
+        $start = ($page - 1) * $limit;
         $mode = input('mode');
         // 验证
         if (!is_admin())
@@ -200,18 +212,16 @@ class Question extends BaseController
         }
         $question = new QuestionModel();
         if ($mode == 'all') {
-            $question = $question->where(true)->select();
+            $question = $question->where(true)->limit($start,$limit)->select();
         } elseif ($mode == 1) {
-            $question = $question->where('is_complaint',1)->select();
+            $question = $question->where('is_complaint',1)->limit($start,$limit)->select();
         } else {
             return error('参数错误');
         }
-        $total = count($question);
-        if (!$total) {
+        if (!count($question)) {
             return error('没有内容');
         } else {
-            $data = array('total'=>$total,'data'=>$question);
-            return success($data);
+            return success($question);
         }
     }
 

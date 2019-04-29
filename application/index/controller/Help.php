@@ -130,11 +130,16 @@ class Help extends BaseController
         } else {
             return error('你没有求助');
         }
-
     }
 
     public function getAllHelps()
     {
+        $page = input('page');
+        if ($page < 1) {
+            return error('参数错误');
+        }
+        $limit = input('limit');
+        $start = ($page - 1) * $limit;
         $is_free = input('is_free');
         $askfor_type = input('askfor_type');
         $publisher = input('publisher');
@@ -147,9 +152,9 @@ class Help extends BaseController
             $help = $help->where('is_free',$is_free);
         }
         if ($publisher != 'all') {
-            $help = $help->where('publisher',$publisher)->select();
+            $help = $help->where('publisher',$publisher)->limit($start,$limit)->select();
         } else {
-            $help = $help->where(true)->select();
+            $help = $help->where(true)->limit($start,$limit)->select();
         }
         if (count($help)) {
             return success($help);
@@ -207,6 +212,12 @@ class Help extends BaseController
 
     public function adminGet()
     {
+        $page = input('page');
+        if ($page < 1) {
+            return error('参数错误');
+        }
+        $limit = input('limit');
+        $start = ($page - 1) * $limit;
         $mode = input('mode');
         // 验证
         if (!is_admin())
@@ -215,18 +226,16 @@ class Help extends BaseController
         }
         $help = new HelpModel();
         if ($mode == 'all') {
-            $help = $help->where(true)->select();
+            $help = $help->where(true)->limit($start,$limit)->select();
         } elseif ($mode == 1) {
-            $help = $help->where('is_complaint',1)->select();
+            $help = $help->where('is_complaint',1)->limit($start,$limit)->select();
         } else {
             return error('参数错误');
         }
-        $total = count($help);
-        if (!$total) {
+        if (!count($help)) {
             return error('没有内容');
         } else {
-            $data = array('total'=>$total,'data'=>$help);
-            return success($data);
+            return success($help);
         }
     }
 
