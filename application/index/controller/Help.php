@@ -115,12 +115,13 @@ class Help extends BaseController
     public function getAll()
     {
         //todo 分页
-        $type = input('has_finshed');
-        $help = new HelpModel();
+        $type = input('has_finished');
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
         if ($type == 0) {
-            $helps = $help->where('has_finshed',0)->select();
+            $helps = $user->helps()->where('has_finished',0)->select();
         } else if ($type == 1) {
-            $helps = $help->where('has_finshed',1)->select();
+            $helps = $user->helps()->where('has_finished',1)->select();
         } else {
             return error('参数错误');
         }

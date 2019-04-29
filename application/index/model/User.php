@@ -147,7 +147,7 @@ class User extends BaseModel
             }
 
             //改变求助状态
-            $help->has_finshed = 1;
+            $help->has_finished = 1;
             $result3 = $help->save();
 
             //增加标签积分

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-04-20 21:04:39
+Date: 2019-04-29 20:12:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,7 +52,7 @@ CREATE TABLE `help` (
   `is_complaint` enum('1','0') NOT NULL DEFAULT '0' COMMENT '1表示被投诉',
   `type` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0为需要个人，1为需要多人',
   `title` varchar(255) NOT NULL,
-  `has_finshed` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未完成',
+  `has_finished` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未完成',
   `publisher` enum('2','1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`help_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
@@ -71,7 +71,7 @@ CREATE TABLE `help_comment` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   PRIMARY KEY (`help_comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for label
