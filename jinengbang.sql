@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-04-29 20:12:38
+Date: 2019-04-30 17:31:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,13 +23,14 @@ CREATE TABLE `apply` (
   `apply_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `help_id` int(11) NOT NULL,
+  `content` varchar(255) NOT NULL,
   `status` enum('1','2','0') NOT NULL DEFAULT '0' COMMENT '0表示待确认，1为成功,2为失败',
   `score` int(11) NOT NULL DEFAULT '0' COMMENT '得分,不通过为0分',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   PRIMARY KEY (`apply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help
@@ -103,7 +104,7 @@ CREATE TABLE `message` (
   `is_office` enum('1','0') NOT NULL DEFAULT '1' COMMENT '1为官方消息',
   `status` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未读，1表示已读',
   PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question
