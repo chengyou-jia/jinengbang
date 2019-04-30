@@ -96,10 +96,16 @@ class Question extends BaseController
 
     public function getAll()
     {
-        $type = input('has_finished');
+        $type = input('type');
         $user_id = session('user.user_id');
         $user = UserModel::get($user_id);
-        
+        if ($type == 'all') {
+            $questions = $user->questions()->where(true)
+                ->order('create_time desc')->select();
+        } else {
+            $questions = $user->questions()->where('type',$type)
+                ->order('create_time desc')->select();
+        }
         if (count($questions)) {
             $questions = $questions->toArray();
             for ($i = 0; $i < count($questions); $i++) {
@@ -181,9 +187,11 @@ class Question extends BaseController
             $question = $question->where('type',$type);
         }
         if ($is_anonymous != 'all') {
-            $question = $question->where('is_anonymous',$is_anonymous)->limit($start,$limit)->select();
+            $question = $question->where('is_anonymous',$is_anonymous)
+                ->order('create_time desc')->limit($start,$limit)->select();
         } else {
-            $question = $question->where(true)->limit($start,$limit)->select();
+            $question = $question->where(true)
+                ->order('create_time desc')->limit($start,$limit)->select();
         }
         if (count($question)) {
             $question = $question->toArray();
@@ -198,11 +206,22 @@ class Question extends BaseController
 
     public function getQuestionsByWord()
     {
+
+        $page = input('page');
+        if ($page < 1) {
+            return error('参数错误');
+        }
+        $limit = input('limit');
+        $start = ($page - 1) * $limit;
         $word = input('word');
         $question = new QuestionModel();
-        $question = $question->where('title|content','like','%'.$word.'%')->select();
+        $question = $question->where('title|content','like','%'.$word.'%')
+            ->order('create_time desc')->limit($start,$limit)->select();
         if (count($question)) {
-
+            $question = $question->toArray();
+            for ($i = 0; $i < count($question); $i++) {
+                $question[$i] = addUserNickname($question[$i]);
+            }
             return success($question);
         } else {
             return error('没有内容');
@@ -225,15 +244,21 @@ class Question extends BaseController
         }
         $question = new QuestionModel();
         if ($mode == 'all') {
-            $question = $question->where(true)->limit($start,$limit)->select();
+            $question = $question->where(true)
+                ->order('create_time desc')->limit($start,$limit)->select();
         } elseif ($mode == 1) {
-            $question = $question->where('is_complaint',1)->limit($start,$limit)->select();
+            $question = $question->where('is_complaint',1)
+                ->order('create_time desc')->limit($start,$limit)->select();
         } else {
             return error('参数错误');
         }
         if (!count($question)) {
             return error('没有内容');
         } else {
+            $question = $question->toArray();
+            for ($i = 0; $i < count($question); $i++) {
+                $question[$i] = addUserNickname($question[$i]);
+            }
             return success($question);
         }
     }

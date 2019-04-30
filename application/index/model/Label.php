@@ -30,7 +30,7 @@ class Label extends BaseModel
             ->order('score','desc')->select();
         for ($i = 0; $i < count($data); $i++) {
             $data[$i] = $data[$i]->toArray();
-            $data[$i] = addUserName($data[$i]);
+            $data[$i] = addUserNickname($data[$i]);
         }
         return $data;
     }

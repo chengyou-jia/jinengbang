@@ -120,9 +120,11 @@ class Help extends BaseController
         $user_id = session('user.user_id');
         $user = UserModel::get($user_id);
         if ($type == 0) {
-            $helps = $user->helps()->where('has_finished',0)->select();
+            $helps = $user->helps()->where('has_finished',0)
+                ->order('create_time desc')->select();
         } else if ($type == 1) {
-            $helps = $user->helps()->where('has_finished',1)->select();
+            $helps = $user->helps()->where('has_finished',1)
+                ->order('create_time desc')->select();
         } else {
             return error('参数错误');
         }
@@ -157,9 +159,11 @@ class Help extends BaseController
             $help = $help->where('is_free',$is_free);
         }
         if ($publisher != 'all') {
-            $help = $help->where('publisher',$publisher)->limit($start,$limit)->select();
+            $help = $help->where('publisher',$publisher)
+                ->order('create_time desc')->limit($start,$limit)->select();
         } else {
-            $help = $help->where(true)->limit($start,$limit)->select();
+            $help = $help->where(true)
+                ->order('create_time desc')->limit($start,$limit)->select();
         }
         if (count($help)) {
             $help = $help->toArray();
@@ -183,7 +187,7 @@ class Help extends BaseController
         $word = input('word');
         $help = new HelpModel();
         $help = $help->where('title|content','like','%'.$word.'%')
-            ->limit($start,$limit)->select();
+            ->order('create_time desc')->limit($start,$limit)->select();
         if (count($help)) {
             $help = $help->toArray();
             for ($i = 0; $i < count($help); $i++) {
@@ -246,9 +250,11 @@ class Help extends BaseController
         }
         $help = new HelpModel();
         if ($mode == 'all') {
-            $help = $help->where(true)->limit($start,$limit)->select();
+            $help = $help->where(true)
+                ->order('create_time desc')->limit($start,$limit)->select();
         } elseif ($mode == 1) {
-            $help = $help->where('is_complaint',1)->limit($start,$limit)->select();
+            $help = $help->where('is_complaint',1)
+                ->order('create_time desc')->limit($start,$limit)->select();
         } else {
             return error('参数错误');
         }
