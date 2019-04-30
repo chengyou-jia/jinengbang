@@ -19,6 +19,7 @@ class Apply extends BaseController
 {
     public function create($help_id)
     {
+        $content = input('content');
         $user_id = session('user.user_id');
         $user  = UserModel::get($user_id);
         $help = HelpModel::get($help_id);
@@ -33,13 +34,16 @@ class Apply extends BaseController
         if ($help->user_id == $user_id) {
             return error('你不能报名自己的求助');
         }
+        if (empty($content)) {
+            return error('内容不能为空');
+        }
         $label = $user->labels()->where('type',$help->askfor_type)->find();
         if (empty($label)) {
             return error('你没有此标签');
         }
         //处理
         $apply = model('Apply');
-        $result = $apply->addApply($help_id);
+        $result = $apply->addApply($help_id,$content);
         if ($result) {
             return success();
         } else {
@@ -131,6 +135,19 @@ class Apply extends BaseController
             return error();
         }
 
+    }
+
+    public function isApply($help_id)
+    {
+        $user_id = session('user.user_id');
+        $user  = UserModel::get($user_id);
+        if ($user->is_apply($help_id)) {
+            $is_apply = true;
+            return success($is_apply);
+        } else {
+            $is_apply = false;
+            return success($is_apply);
+        }
     }
 
 }
