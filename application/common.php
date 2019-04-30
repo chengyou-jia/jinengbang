@@ -24,14 +24,30 @@ function error($errMsg = 'ERROR')
 }
 
 //增加用户姓名
- function addUserName($data)
- {
-     $user_id = $data['user_id'];
-     $user = \app\index\model\User::get($user_id);
-     $user_name = $user->user_name;
-     $data = array('user_name'=>$user_name)+$data;
-     return $data;
- }
+function addUserName($data)
+{
+    $user_id = $data['user_id'];
+    $user = \app\index\model\User::get($user_id);
+    $user_name = $user->user_name;
+    $data = array('user_name'=>$user_name)+$data;
+    return $data;
+}
+
+//增加用户昵称
+function addUserNickname($data)
+{
+    $user_id = $data['user_id'];
+    $user = \app\index\model\User::get($user_id);
+    if (empty($user)) {
+        $nickname = '该用户不存在';
+        $data = array('nickname'=>$nickname)+$data;
+        return $data;
+    }
+    $nickname = $user->nickname;
+    $data = array('nickname'=>$nickname)+$data;
+    return $data;
+
+}
 
 // 输入数据验证
 function validateData($data,$validate,$scene=null)

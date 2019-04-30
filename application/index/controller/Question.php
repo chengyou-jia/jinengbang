@@ -96,9 +96,15 @@ class Question extends BaseController
 
     public function getAll()
     {
-        //todo 分页
-        $questions = QuestionModel::all();
+        $type = input('has_finished');
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
+        
         if (count($questions)) {
+            $questions = $questions->toArray();
+            for ($i = 0; $i < count($questions); $i++) {
+                $questions[$i] = addUserNickname($questions[$i]);
+            }
             return success($questions);
         } else {
             return error('你没有标签');
@@ -112,6 +118,8 @@ class Question extends BaseController
             $question->browse = $question->browse + 1;
             $result = $question->save();
             if ($result) {
+                $question = $question->toArray();
+                $question = addUserNickname($question);
                 return success($question);
             } else {
                 return error('获取失败');
@@ -178,6 +186,10 @@ class Question extends BaseController
             $question = $question->where(true)->limit($start,$limit)->select();
         }
         if (count($question)) {
+            $question = $question->toArray();
+            for ($i = 0; $i < count($question); $i++) {
+                $question[$i] = addUserNickname($question[$i]);
+            }
             return success($question);
         } else {
             return error('没有内容');
@@ -190,6 +202,7 @@ class Question extends BaseController
         $question = new QuestionModel();
         $question = $question->where('title|content','like','%'.$word.'%')->select();
         if (count($question)) {
+
             return success($question);
         } else {
             return error('没有内容');

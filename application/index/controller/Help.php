@@ -101,6 +101,8 @@ class Help extends BaseController
             $help->browse = $help->browse + 1;
             $result = $help->save();
             if ($result) {
+                $help = $help->toArray();
+                $help = addUserNickname($help);
                 return success($help);
             } else {
                 return error('获取失败');
@@ -114,7 +116,6 @@ class Help extends BaseController
 
     public function getAll()
     {
-        //todo 分页
         $type = input('has_finished');
         $user_id = session('user.user_id');
         $user = UserModel::get($user_id);
@@ -126,6 +127,10 @@ class Help extends BaseController
             return error('参数错误');
         }
         if (count($helps)) {
+            $helps = $helps->toArray();
+            for ($i = 0; $i < count($helps); $i++) {
+                $helps[$i] = addUserNickname($helps[$i]);
+            }
             return success($helps);
         } else {
             return error('你没有求助');
@@ -157,6 +162,10 @@ class Help extends BaseController
             $help = $help->where(true)->limit($start,$limit)->select();
         }
         if (count($help)) {
+            $help = $help->toArray();
+            for ($i = 0; $i < count($help); $i++) {
+                $help[$i] = addUserNickname($help[$i]);
+            }
             return success($help);
         } else {
             return error('没有内容');
@@ -165,10 +174,21 @@ class Help extends BaseController
 
     public function getHelpsByWord()
     {
+        $page = input('page');
+        if ($page < 1) {
+            return error('参数错误');
+        }
+        $limit = input('limit');
+        $start = ($page - 1) * $limit;
         $word = input('word');
         $help = new HelpModel();
-        $help = $help->where('title|content','like','%'.$word.'%')->select();
+        $help = $help->where('title|content','like','%'.$word.'%')
+            ->limit($start,$limit)->select();
         if (count($help)) {
+            $help = $help->toArray();
+            for ($i = 0; $i < count($help); $i++) {
+                $help[$i] = addUserNickname($help[$i]);
+            }
             return success($help);
         } else {
             return error('没有内容');
@@ -235,6 +255,10 @@ class Help extends BaseController
         if (!count($help)) {
             return error('没有内容');
         } else {
+            $help = $help->toArray();
+            for ($i = 0; $i < count($help); $i++) {
+                $help[$i] = addUserNickname($help[$i]);
+            }
             return success($help);
         }
     }
