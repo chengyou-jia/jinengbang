@@ -22,6 +22,7 @@ Route::group('api', function () {
         Route::get('login', 'index/user/login');
         Route::post('certification', 'index/user/certification');
     });
+    Route::get('otherPage/:user_id','index/user/getOtherPage');
 
     Route::group('cas', function () {
         Route::post('/', 'index/cas/login');

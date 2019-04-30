@@ -202,4 +202,19 @@ class User extends BaseController
 
     }
 
+    public function getOtherPage($user_id)
+    {
+        $user = UserModel::get($user_id);
+        if (empty($user)) {
+            error('该用户不存在');
+        }
+        $labels = $user->labels()->where(true)->select();
+        $user = $user->toArray();
+        unset($user['user_name']);
+        unset($user['wechat_id']);
+        $labels = $labels->toArray();
+        $data = array('user'=>$user,'labels'=>$labels);
+        return success($data);
+    }
+
 }

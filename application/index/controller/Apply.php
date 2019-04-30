@@ -110,7 +110,6 @@ class Apply extends BaseController
 
     public function confirm($help_id)
     {
-
         $score = input('score');
         $num = array(0,1,2,3,4,5);
         if (!in_array($score,$num)) {
