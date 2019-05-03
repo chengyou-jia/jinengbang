@@ -93,9 +93,14 @@ class QuestionComment extends BaseController
         //查找
         $questionComment1 = questionCommentModel::get($question_comment_id);
         $questionComments = questionCommentModel::where('prior',$question_comment_id)
-            ->select();
+            ->order('create_time desc')->select();
         $questionComments = $questionComments->toArray();
-        array_push($questionComments,$questionComment1);
+        for ($i = 0; $i < count($questionComments); $i++) {
+            $questionComments[$i] = addUserNickname($questionComments[$i]);
+        }
+        $questionComment1 = $questionComment1->toArray();
+        $questionComment1 = addUserNickname($questionComment1);
+        array_unshift($questionComments,$questionComment1);
         return success($questionComments);
     }
 
@@ -108,9 +113,13 @@ class QuestionComment extends BaseController
             return error('求助不存在');
         }
         $questionComment = questionCommentModel::where('question_id',$question_id)
-            ->where('prior',-1)
+            ->where('prior',-1)->order('create_time desc')
             ->select();
         if (count($questionComment)) {
+            $questionComment = $questionComment->toArray();
+            for ($i = 0; $i < count($questionComment); $i++) {
+                $questionComment[$i] = addUserNickname($questionComment[$i]);
+            }
             return success($questionComment);
         } else {
             return error('没有留言');

@@ -39,7 +39,10 @@ class Apply extends BaseController
         }
         $label = $user->labels()->where('type',$help->askfor_type)->find();
         if (empty($label)) {
-            return error('你没有此标签');
+            $result = $user->labels()->save(['type'=>$help->askfor_type]);
+            if (!$result) {
+                return error('创建标签失败');
+            }
         }
         //处理
         $apply = model('Apply');
@@ -66,8 +69,12 @@ class Apply extends BaseController
         }
 
         //处理
-        $apply = $help->applys()->select();
+        $apply = $help->applys()->order('create_time','desc')->select();
         if (count($apply)) {
+            $apply = $apply->toArray();
+            for ($i = 0; $i < count($apply); $i++) {
+                $apply[$i] = addUserNickname($apply[$i]);
+            }
             return success($apply);
         } else {
             return error('此求助没有人报名');
@@ -78,7 +85,7 @@ class Apply extends BaseController
     {
         $user_id = session('user.user_id');
         $user = UserModel::get($user_id);
-        $apply = $user->applys()->select();
+        $apply = $user->applys()->order('create_time','desc')->select();
         if (count($apply)) {
             return success($apply);
         } else {

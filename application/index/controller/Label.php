@@ -92,7 +92,7 @@ class Label extends BaseController
     {
         $user_id = session('user.user_id');
         $user = UserModel::get($user_id);
-        $labels = $user->labels()->where(true)->select();
+        $labels = $user->labels()->where(true)->order('score','desc')->select();
         if (count($labels)) {
             return success($labels);
         } else {
@@ -110,8 +110,6 @@ class Label extends BaseController
         } else {
             return error('你没有标签');
         }
-
-
     }
 
     public function getAllRank()
@@ -159,9 +157,9 @@ class Label extends BaseController
         }
         $user = UserModel::get($user_id);
         $help_num = $user->help_num;
-        $help_num_arr = array('help_num'=>$help_num);
-        array_push($arr,$help_num_arr);
-        return success($arr);
+        $data = array('help_num'=>$help_num,'rank'=>$arr);
+
+        return success($data);
     }
 
 

@@ -16,7 +16,6 @@ class Label extends Validate
 {
     protected $rule = [
         'type|类型' => 'require',// todo 类型验证
-        'description' => 'require'
     ];
 
     protected $message = [

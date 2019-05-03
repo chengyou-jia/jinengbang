@@ -93,9 +93,14 @@ class HelpComment extends BaseController
         //查找
         $helpComment1 = HelpCommentModel::get($help_comment_id);
         $helpComments = HelpCommentModel::where('prior',$help_comment_id)
-            ->select();
+            ->order('create_time desc')->select();
         $helpComments = $helpComments->toArray();
-        array_push($helpComments,$helpComment1);
+        for ($i = 0; $i < count($helpComments); $i++) {
+            $helpComments[$i] = addUserNickname($helpComments[$i]);
+        }
+        $helpComment1 = $helpComment1->toArray();
+        $helpComment1 = addUserNickname($helpComment1);
+        array_unshift($helpComments,$helpComment1);
         return success($helpComments);
     }
 
@@ -108,9 +113,13 @@ class HelpComment extends BaseController
             return error('求助不存在');
         }
         $helpComment = HelpCommentModel::where('help_id',$help_id)
-            ->where('prior',-1)
+            ->where('prior',-1)->order('create_time desc')
             ->select();
         if (count($helpComment)) {
+            $helpComment = $helpComment->toArray();
+            for ($i = 0; $i < count($helpComment); $i++) {
+                $helpComment[$i] = addUserNickname($helpComment[$i]);
+            }
             return success($helpComment);
         } else {
             return error('没有留言');
