@@ -214,7 +214,19 @@ class Question extends BaseController
         $limit = input('limit');
         $start = ($page - 1) * $limit;
         $word = input('word');
+        $type = input('type');
+        $is_anonymous = input('is_anonymous');
         $question = new QuestionModel();
+        $question = $question->where(true);
+        if ($type != 'all') {
+            $question = $question->where('type',$type);
+        }
+        if ($is_anonymous != 'all') {
+            $question = $question->where('is_anonymous',$is_anonymous);
+        }
+        if (!strlen($word)) {
+            return error('word不能为空');
+        }
         $question = $question->where('title|content','like','%'.$word.'%')
             ->order('create_time desc')->limit($start,$limit)->select();
         if (count($question)) {

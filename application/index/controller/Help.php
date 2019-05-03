@@ -203,7 +203,7 @@ class Help extends BaseController
         if ($publisher != 'all') {
             $help = $help->where('publisher',$publisher);
         }
-        if (empty($word) and $word != 0) {
+        if (!strlen($word)) {
             return error('word不能为空');
         }
         $help = $help->where('title|content','like','%'.$word.'%')
