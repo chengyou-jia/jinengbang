@@ -119,7 +119,10 @@ class Help extends BaseController
         $type = input('has_finished');
         $user_id = session('user.user_id');
         $user = UserModel::get($user_id);
-        if ($type == 0) {
+        if ($type == 'all') {
+            $helps = $user->helps()->where(true)
+                ->order('create_time desc')->select();
+        } else if ($type == 0) {
             $helps = $user->helps()->where('has_finished',0)
                 ->order('create_time desc')->select();
         } else if ($type == 1) {
@@ -176,6 +179,7 @@ class Help extends BaseController
         }
     }
 
+    // todo 妈的好难写
     public function getHelpsByWord()
     {
         $page = input('page');
@@ -185,7 +189,23 @@ class Help extends BaseController
         $limit = input('limit');
         $start = ($page - 1) * $limit;
         $word = input('word');
+        $is_free = input('is_free');
+        $askfor_type = input('askfor_type');
+        $publisher = input('publisher');
         $help = new HelpModel();
+        $help = $help->where(true);
+        if ($askfor_type != 'all') {
+            $help = $help->where('askfor_type',$askfor_type);
+        }
+        if ($is_free != 'all') {
+            $help = $help->where('is_free',$is_free);
+        }
+        if ($publisher != 'all') {
+            $help = $help->where('publisher',$publisher);
+        }
+        if (empty($word) and $word != 0) {
+            return error('word不能为空');
+        }
         $help = $help->where('title|content','like','%'.$word.'%')
             ->order('create_time desc')->limit($start,$limit)->select();
         if (count($help)) {

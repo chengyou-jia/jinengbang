@@ -149,10 +149,14 @@ class Apply extends BaseController
         $user  = UserModel::get($user_id);
         if ($user->is_apply($help_id)) {
             $is_apply = true;
-            return success($is_apply);
+            $apply = $user->applys()->where('help_id',$help_id)->find();
+            $apply_id = $apply->apply_id;
+            $data = array('is_apply'=>$is_apply,'apply_id'=>$apply_id);
+            return success($data);
         } else {
             $is_apply = false;
-            return success($is_apply);
+            $data = array('is_apply'=>$is_apply);
+            return success($data);
         }
     }
 
