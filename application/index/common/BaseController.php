@@ -11,6 +11,7 @@ namespace app\index\common;
 
 
 use think\Controller;
+use app\index\model\User as UserModel;
 
 class BaseController extends Controller
 {
@@ -23,4 +24,59 @@ class BaseController extends Controller
 
     }
 
+    public function getOneFile($inputName,$saveName)
+    {
+        // 上传文件
+        $result = array('result'=>true,'message'=>'');
+        $file = request()->file($inputName);
+        dump($file);
+        if (empty($file)) {
+            $result['result'] = false;
+            $result['message'] = '上传不能为空';
+            return $result;
+        }
+        // /uploads/certification 目录下
+        $info = $file->move( './uploads/'.$saveName);
+        if ($info) {
+            dump($info);
+            // 成功上传后 存放上传信息
+            // todo 存储地址可能待定
+            $avatar = 'uploads/'.$saveName.'/'.$info->getSaveName();
+            $result['message'] = $avatar;
+            return $result;
+            } else {
+            // 上传失败获取错误信息
+            $result['result'] = false;
+            $result['message'] = $file->getError();
+        }
+    }
+
+    public function getManyFiles($inputName,$saveName)
+    {
+        // 上传文件
+        $result = array('result'=>true,'message'=>null);
+        $files = request()->file($inputName);
+        dump($files);
+        if (empty($files)) {
+            return $result;
+        }
+        // /uploads/help 目录下
+        $picture = '';
+        foreach ($files as $key => $file) {
+            $info = $file->move( './uploads/'.$saveName);
+            if ($info) {
+                dump($info);
+                // 成功上传后 存放上传信息
+                $picture = $picture.'uploads/'.$saveName.'/'.$info->getSaveName().' | ';
+            } else {
+                // 上传失败获取错误信息
+                $result['result'] = false;
+                $result['message'] = $file->getError();
+                return $result;
+            }
+        }
+        $result['message'] = $picture;
+        return $result;
+
+    }
 }

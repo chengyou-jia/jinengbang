@@ -8,8 +8,6 @@
  */
 
 namespace app\index\controller;
-
-
 use app\index\common\BaseController;
 use app\index\model\HelpComment as HelpCommentModel;
 use app\index\model\Help as HelpModel;

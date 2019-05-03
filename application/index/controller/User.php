@@ -56,6 +56,12 @@ class User extends BaseController
            if ($user) {
                return error('已经注册');
            }
+           //存放头像
+           $result = $this->getOneFile('img','avatar');
+           if (!$result['result']) {
+               return error($result['message']);
+           }
+           $data = array('photo'=>$result['message']) + $data;
            $user = model('User');
            $result = $user->allowField(true)->save($data);
            $user_id = $user->user_id; //再次查找存session
@@ -70,7 +76,6 @@ class User extends BaseController
        } else {
            return error($checkResult);
        }
-
     }
 
     public function update()
@@ -125,7 +130,7 @@ class User extends BaseController
         }
         // 移动到框架应用根目录/uploads/certification 目录下
         $info = $file->move( '../uploads/certification');
-        if($info){
+        if ($info) {
             // 成功上传后 存放上传信息
             $user_id = session('user.user_id');
             $user = UserModel::get($user_id);

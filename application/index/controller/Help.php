@@ -21,6 +21,12 @@ class Help extends BaseController
         $data = input('param.');
         $checkResult = validateData($data,'Help');
         if ($checkResult === true) {
+            //存放图片
+            $result = $this->getManyFiles('img','help');
+            if (!$result['result']) {
+                return error($result['message']);
+            }
+            $data = array('picture'=>$result['message']) + $data;
             $user_id = session('user.user_id');
             $user = UserModel::get($user_id);
             //存储
@@ -30,14 +36,13 @@ class Help extends BaseController
                 'is_free' => $data['is_free'],
                 'askfor_type' => $data['askfor_type'],
                 'type' => $data['type'],
-                // todo 图片待存储
+                'picture'=> $data['picture']
             ]);
             if ($result) {
                 return success();
             } else {
                 return error('新增失败');
             }
-
         } else {
             return error($checkResult);
         }

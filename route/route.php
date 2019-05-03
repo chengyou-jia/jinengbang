@@ -135,7 +135,6 @@ Route::group('api', function () {
 
 
     });
-
     Route::group('developer',function () {
        Route::get('getAll','index/developer/getAllAdmin');
        Route::get('getOne/:user_id','index/developer/getOneAdmin');
