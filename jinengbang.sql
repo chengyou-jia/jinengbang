@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-04-30 17:31:36
+Date: 2019-05-03 12:31:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,7 @@ CREATE TABLE `apply` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   PRIMARY KEY (`apply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help
@@ -56,7 +56,7 @@ CREATE TABLE `help` (
   `has_finished` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未完成',
   `publisher` enum('2','1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`help_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help_comment
@@ -72,7 +72,7 @@ CREATE TABLE `help_comment` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   PRIMARY KEY (`help_comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for label
@@ -81,14 +81,14 @@ DROP TABLE IF EXISTS `label`;
 CREATE TABLE `label` (
   `label_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `type` enum('0','5','4','3','2','1') NOT NULL DEFAULT '0' COMMENT '具体表示暂定',
+  `type` enum('0','1','2','3','4') NOT NULL DEFAULT '0' COMMENT '具体表示暂定',
   `score` int(11) NOT NULL DEFAULT '0',
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`label_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for message
@@ -104,7 +104,7 @@ CREATE TABLE `message` (
   `is_office` enum('1','0') NOT NULL DEFAULT '1' COMMENT '1为官方消息',
   `status` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未读，1表示已读',
   PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question
@@ -142,7 +142,7 @@ CREATE TABLE `question_comment` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   PRIMARY KEY (`question_comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for suggestion
