@@ -44,7 +44,8 @@ function addUserNickname($data)
         return $data;
     }
     $nickname = $user->nickname;
-    $data = array('nickname'=>$nickname)+$data;
+    $avatar = $user->photo;
+    $data = array('nickname'=>$nickname,'avatar'=>$avatar)+$data;
     return $data;
 
 }
