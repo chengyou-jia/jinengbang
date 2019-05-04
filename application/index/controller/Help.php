@@ -22,7 +22,7 @@ class Help extends BaseController
         $checkResult = validateData($data,'Help');
         if ($checkResult === true) {
             //存放图片
-            $result = $this->getManyFiles('img','help');
+            $result = $this->getManyFiles('imgs','help');
             if (!$result['result']) {
                 return error($result['message']);
             }
@@ -159,7 +159,7 @@ class Help extends BaseController
         $askfor_type = input('askfor_type');
         $publisher = input('publisher');
         $help = new HelpModel();
-        $help = $help->where(true);
+        $help = $help->where('has_finished',0);
         if ($askfor_type != 'all') {
             $help = $help->where('askfor_type',$askfor_type);
         }

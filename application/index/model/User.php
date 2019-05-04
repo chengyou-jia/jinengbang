@@ -148,6 +148,7 @@ class User extends BaseModel
 
             //改变求助状态
             $help->has_finished = 1;
+            dump($help);
             $result3 = $help->save();
 
             //增加标签积分
@@ -157,6 +158,7 @@ class User extends BaseModel
 
             //改变user score
             $user->score = $user->score + $score;
+            $user->help_num = $user->help_num + 1;
             $result5 = $user->save();
 
             //new_message
