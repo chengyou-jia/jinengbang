@@ -56,7 +56,6 @@ class BaseController extends Controller
         // 上传文件
         $result = array('result'=>true,'message'=>null);
         $files = request()->file($inputName);
-        dump($files);
         if (empty($files)) {
             return $result;
         }
