@@ -22,13 +22,15 @@ class Message extends BaseModel
         return $this->belongsTo('User');
     }
 
-    static public function addContent($content,$user_id,$is_office=1)
+    static public function addContent($content,$user_id,$type,$type_id,$is_office=1)
     {
         $user = User::get($user_id);
-        $result = $user->messages()->save(
-            ['content'=>$content],
-            ['is_office'=>$is_office]
-        );
+        $result = $user->messages()->save([
+            'content' => $content,
+            'type' => $type,
+            'type_id' => $type_id,
+            'is_office' => $is_office
+        ]);
         if ($result){
             return true;
         } else {

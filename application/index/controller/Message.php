@@ -17,31 +17,61 @@ class Message extends BaseController
 {
     public function getAll()
     {
+        $page = input('page');
+        if ($page < 1) {
+            return error('参数错误');
+        }
+        $limit = input('limit');
+        $start = ($page - 1) * $limit;
         $status = input('status');
         $user_id = session('user.user_id');
 
         $user = UserModel::get($user_id);
+        $messages = $user->messages()->where('status', 0)->select();
+        $total = count($messages);
         if ($status == 'all') {
-            $messages = $user->messages()->select();
+            $messages = $user->messages()->limit($start,$limit)
+                ->order('create_time desc')->select();
             if (count($messages)) {
-                $data = array('total'=>count($messages),'data'=>$messages);
-                return success($data);
+                //消除新消息
+                $result = UserModel::noNewMessage($user_id);
+                if ($result) {
+                    $data = array('total'=>$total,'data'=>$messages);
+                    return success($data);
+                } else {
+                    error('获取失败');
+                }
+
             } else {
                 return error('没有消息');
             }
         } elseif ($status == 0) {
-            $messages = $user->messages()->where('status', 0)->select();
+            $messages = $user->messages()->where('status', 0)->limit($start,$limit)
+                ->order('create_time desc')->select();
             if (count($messages)) {
-                $data = array('total'=>count($messages),'data'=>$messages);
-                return success($data);
+                //消除新消息
+                $result = UserModel::noNewMessage($user_id);
+                if ($result) {
+                    $data = array('total'=>$total,'data'=>$messages);
+                    return success($data);
+                } else {
+                    error('获取失败');
+                }
             } else {
                 return error('没有消息');
             }
         } elseif ($status == 1) {
-            $messages = $user->messages()->where('status', 1)->select();
+            $messages = $user->messages()->where('status', 1)
+                ->limit($start,$limit)->order('create_time desc')->select();
             if (count($messages)) {
-                $data = array('total'=>count($messages),'data'=>$messages);
-                return success($data);
+                //消除新消息
+                $result = UserModel::noNewMessage($user_id);
+                if ($result) {
+                    $data = array('total'=>$total,'data'=>$messages);
+                    return success($data);
+                } else {
+                    error('获取失败');
+                }
             } else {
                 return error('没有消息');
             }

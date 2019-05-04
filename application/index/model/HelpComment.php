@@ -39,12 +39,41 @@ class HelpComment extends BaseModel
             $result1 = $user->helpComments()->save([
                 'content' =>$data['content'], 'prior' => $prior,'help_id'=>$data['help_id']
             ]);
+
+            //求助回复加一
             $help = help::get($help_id);
             $help->reply = $help->reply + 1;
             $result2 = $help->save();
 
+            //添加新消息
+            if ($help->user_id == $user_id) {
+                //自己回复无需添加消息
+                $result3 = true;
+                $result4 = true;
+            } else {
+                $user_id = $help->user_id;
+                if ($prior == -1) {
+                    //求助者消息
+                    $content = '你的求助有新的评论，快去看看吧';
+                    $type = 1;
+                    $type_id = $help_id;
+                    $result3 = Message::addContent($content,$user_id,$type,$type_id);
+                    $user_id = $help->user_id;
+                    $result4 = User::hasNewMessage($user_id);
+                } else {
+                    $content = '你的求助评论被回复了，快去看看吧';
+                    $type = 2;
+                    $type_id = $prior;
+                    $help_comment = HelpComment::get($prior);
+                    $user_id = $help_comment->user_id;
+                    $result3 = Message::addContent($content,$user_id,$type,$type_id);
+                    $result4 = User::hasNewMessage($user_id);
+                }
+            }
+
+
             // 提交事务
-            if ($result1 and $result2) {
+            if ($result1 and $result2 and $result3 and $result4) {
                 Db::commit();
                 return true;
             } else {

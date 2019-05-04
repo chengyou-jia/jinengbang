@@ -111,6 +111,22 @@ class User extends BaseModel
         }
     }
 
+    static public function noNewMessage($user_id)
+    {
+        $user = User::get($user_id);
+        if ($user->new_message == 1) {
+            $user->new_message = 0;
+            $result = $user->save();
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
     // 确认 增加标签积分，改变报名状态，求助状态，消除其他报名状态 改变user转态
     public function applyConfirm($help_id,$apply_id,$score)
     {
@@ -148,7 +164,6 @@ class User extends BaseModel
 
             //改变求助状态
             $help->has_finished = 1;
-            dump($help);
             $result3 = $help->save();
 
             //增加标签积分
@@ -163,7 +178,9 @@ class User extends BaseModel
 
             //new_message
             $content = '你有一个报名被确认，你增加了相应的积分，快去看看吧';
-            $result6 = Message::addContent($content,$apply_user_id);
+            $type = 5;
+            $type_id = $apply_id;
+            $result6 = Message::addContent($content,$apply_user_id,$type,$type_id);
             $result7 = User::hasNewMessage($apply_user_id);
             if ($result1 and $result2 and
                 $result3 and $result4 and

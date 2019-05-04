@@ -46,7 +46,9 @@ class Apply extends BaseModel
             $help->apply_num = $help->apply_num + 1;
             $result2 = $help->save();
             $content1 = '你的求助有人报名了，快去查看吧';
-            $result3 = Message::addContent($content1,$help_user_id);
+            $type = 1;
+            $type_id = $help_id;
+            $result3 = Message::addContent($content1,$help_user_id,$type,$type_id);
             $result4 = User::hasNewMessage($help_user_id);
             if ($result1 and $result2 and $result3 and $result4 ) {
                 // 提交事务
