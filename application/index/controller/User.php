@@ -56,12 +56,6 @@ class User extends BaseController
            if ($user) {
                return error('已经注册');
            }
-           //存放头像
-           $result = $this->getOneFile('img','avatar');
-           if (!$result['result']) {
-               return error($result['message']);
-           }
-           $data = array('photo'=>$result['message']) + $data;
            $user = model('User');
            $result = $user->allowField(true)->save($data);
            $user_id = $user->user_id; //再次查找存session

@@ -66,5 +66,32 @@ class Apply extends BaseModel
         }
     }
 
+    static public function cancelApply($apply_id)
+    {
+        $apply = Apply::get($apply_id);
+        $help_id = $apply->help_id;
+        $help = Help::get($help_id);
+        Db::startTrans();
+        try {
+            $result1 = $apply->delete();
+            $help->apply_num = $help->apply_num-1;
+            $result2 = $help->save();
+            if ($result1 and $result2) {
+                // 提交事务
+                Db::commit();
+                return true;
+            } else {
+                // 回滚事务
+                Db::rollback();
+                return false;
+            }
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return false;
+        }
+
+    }
+
 
 }

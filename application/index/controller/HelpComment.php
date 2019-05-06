@@ -38,8 +38,12 @@ class HelpComment extends BaseController
                 $prior = -1;
             }
             $helpComment = new HelpCommentModel();
-            $helpComment->saveComment($data,$prior);
-            return success();
+            $result = $helpComment->saveComment($data,$prior);
+            if ($result) {
+                return success();
+            } else {
+                return error();
+            }
         } else {
             return error($checkResult);
         }

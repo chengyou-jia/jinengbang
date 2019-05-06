@@ -13,6 +13,7 @@ namespace app\index\controller;
 use app\index\common\BaseController;
 use app\index\model\User as UserModel;
 use app\index\model\Help as HelpModel;
+use app\index\model\Apply as ApplyModel;
 use think\Validate;
 
 class Apply extends BaseController
@@ -94,6 +95,17 @@ class Apply extends BaseController
 
     }
 
+    public function getOneApply($apply_id)
+    {
+        //todo 可能要做验证
+        $apply = ApplyModel::get($apply_id);
+        if (empty($apply)) {
+            return error('该报名不存在');
+        } else {
+            return success($apply);
+        }
+    }
+
     public function delete($apply_id)
     {
         $user_id  = session('user.user_id');
@@ -107,7 +119,7 @@ class Apply extends BaseController
             return error('此报名不能取消');
         }
         //处理
-        $result = $apply->delete();
+        $result = ApplyModel::cancelApply($apply_id);
         if ($result) {
             return success();
         } else {

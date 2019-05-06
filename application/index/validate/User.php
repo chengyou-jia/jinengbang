@@ -18,12 +18,13 @@ class User extends Validate
         'user_name|用户名' => 'require|max:25',
         'nickname|昵称' => 'require|max:25',
         'wechat|微信号' => 'require',
-        'mobile|手机号' => 'require|number|length:6,11',
+        'mobile|手机号' => 'number|length:6,11',
         'wechat_id|微信id' => 'require',
         'qq|QQ' => 'require|length:6,10',
         'gender' => 'require|in:0,1',
-        'major' => 'require',
-        'grade' => 'require',
+        'photo' => 'require',
+        //'major' => '',
+        //'grade' => '',
 
     ];
 

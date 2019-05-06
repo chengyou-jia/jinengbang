@@ -41,8 +41,12 @@ class QuestionComment extends BaseController
                 $prior = -1;
             }
             $questionComment = new QuestionCommentModel();
-            $questionComment->saveComment($data,$prior);
-            return success();
+            $result = $questionComment->saveComment($data,$prior);
+            if ($result) {
+                return success();
+            } else {
+                return error();
+            }
         } else {
             return error($checkResult);
         }

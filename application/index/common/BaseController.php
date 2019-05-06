@@ -29,7 +29,6 @@ class BaseController extends Controller
         // 上传文件
         $result = array('result'=>true,'message'=>'');
         $file = request()->file($inputName);
-        dump($file);
         if (empty($file)) {
             $result['result'] = false;
             $result['message'] = '上传不能为空';
@@ -38,10 +37,13 @@ class BaseController extends Controller
         // /uploads/certification 目录下
         $info = $file->move( './uploads/'.$saveName);
         if ($info) {
-            dump($info);
             // 成功上传后 存放上传信息
             // todo 存储地址可能待定
-            $avatar = 'uploads/'.$saveName.'/'.$info->getSaveName();
+            dump($info->getSaveName());
+            $name = $info->getSaveName();
+            str_replace('\\','/',$name);
+            $avatar = 'uploads/'.$saveName.'/'.$name;
+            dump($avatar);
             $result['message'] = $avatar;
             return $result;
             } else {
