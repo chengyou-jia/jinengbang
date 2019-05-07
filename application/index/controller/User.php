@@ -25,13 +25,11 @@ class User extends BaseController
         $user = $user->where('wechat_id',$wechat_id)->find();
         if ($user) {
             session('user',$user);
-            dump($user);
             return success();
         } else {
             return error('找不到该用户');
         }
     }
-
     //这玩意不确定要不要写
     public function logout()
     {
@@ -198,7 +196,6 @@ class User extends BaseController
         } else {
             return error('没有内容');
         }
-
     }
 
     public function getOtherPage($user_id)
@@ -214,6 +211,24 @@ class User extends BaseController
         $labels = $labels->toArray();
         $data = array('user'=>$user,'labels'=>$labels);
         return success($data);
+    }
+
+    public function changePhoto()
+    {
+        $photo = input('photo');
+        if (empty($photo)) {
+            return error('头像不能为空');
+        }
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
+        $user->photo = $photo;
+        $result = $user->save();
+        if ($result) {
+            return success();
+        } else {
+            return error('存储失败');
+        }
+
     }
 
 }
