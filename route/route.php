@@ -91,6 +91,8 @@ Route::group('api', function () {
     Route::put('/questionLike/:question_id','index/question/questionLike');
     Route::get('/getAllQuestions','index/question/getAllQuestions');
     Route::get('/getQuestionsByWord','index/question/getQuestionsByWord');
+    Route::post('/addQuestionPicture/:question_id','index/question/addQuestionPicture');
+
 
 
 

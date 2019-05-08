@@ -327,8 +327,5 @@ class Help extends BaseController
                 return error('图片上传失败');
             }
         }
-
-
-
     }
 }

@@ -294,4 +294,27 @@ class Question extends BaseController
         }
     }
 
+    public function addQuestionPicture($question_id)
+    {
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
+        //验证
+        $question = $user->questions()->where('question_id',$question_id)->find();
+        if (empty($question)){
+            return error('你没有此提问');
+        }
+        $result = getOneFile('img','question');
+        if (!$result['result']) {
+            return error($result['message']);
+        } else {
+            $question->picture = $question->picture.$result['message'].'||';
+            $result = $question->save();
+            if ($result) {
+                return success();
+            } else {
+                return error('图片上传失败');
+            }
+        }
+    }
+
 }
