@@ -45,7 +45,8 @@ function addUserNickname($data)
     }
     $nickname = $user->nickname;
     $avatar = $user->photo;
-    $data = array('nickname'=>$nickname,'photo'=>$avatar)+$data;
+    $is_cert = $user->cert;
+    $data = array('nickname'=>$nickname,'photo'=>$avatar,'is_cert'=>$is_cert)+$data;
     return $data;
 
 }
@@ -77,7 +78,7 @@ function getOneFile($inputName,$saveName)
     if ($info) {
         // 成功上传后 存放上传信息
         $name = str_replace("\\","/",$info->getSaveName());
-        $name = $saveName.$name;
+        $name = $saveName.'/'.$name;
 
         $result['message'] = $name;
         return $result;
