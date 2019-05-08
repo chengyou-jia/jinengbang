@@ -21,12 +21,6 @@ class Help extends BaseController
         $data = input('param.');
         $checkResult = validateData($data,'Help');
         if ($checkResult === true) {
-            //存放图片
-            $result = $this->getManyFiles('imgs','help');
-            if (!$result['result']) {
-                return error($result['message']);
-            }
-            $data = array('picture'=>$result['message']) + $data;
             $user_id = session('user.user_id');
             $user = UserModel::get($user_id);
             //存储
@@ -35,8 +29,7 @@ class Help extends BaseController
                 'content' => $data['content'],
                 'is_free' => $data['is_free'],
                 'askfor_type' => $data['askfor_type'],
-                'type' => $data['type'],
-                'picture'=> $data['picture']
+                'type' => $data['type']
             ]);
             if ($result) {
                 return success();
@@ -311,5 +304,31 @@ class Help extends BaseController
         } else {
             return error();
         }
+    }
+
+    public function addHelpPicture($help_id)
+    {
+        $user_id = session('user.user_id');
+        $user = UserModel::get($user_id);
+        //验证
+        $help = $user->helps()->where('help_id',$help_id)->find();
+        if (empty($help)){
+            return error('你没有此求助');
+        }
+        $result = getOneFile('img','help');
+        if (!$result['result']) {
+            return error($result['message']);
+        } else {
+            $help->picture = $help->picture.$result['message'].'||';
+            $result = $help->save();
+            if ($result) {
+                return success();
+            } else {
+                return error('图片上传失败');
+            }
+        }
+
+
+
     }
 }

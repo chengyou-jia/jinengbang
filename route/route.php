@@ -57,6 +57,7 @@ Route::group('api', function () {
     Route::put('/complaintHelp/:help_id','index/help/complaintHelp');
     Route::put('/helpLike/:help_id','index/help/helpLike');
     Route::get('/getHelpsByWord','index/help/getHelpsByWord');
+    Route::post('/addHelpPicture/:help_id','index/help/addHelpPicture');
 
 
 
@@ -117,7 +118,6 @@ Route::group('api', function () {
 
     Route::group('admin', function () {
         Route::group('user', function () {
-
             Route::get('certification', 'index/user/adminGetCert');
             Route::put('certification/:user_id', 'index/user/adminAuditCert');
         });

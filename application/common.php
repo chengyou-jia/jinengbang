@@ -62,6 +62,31 @@ function validateData($data,$validate,$scene=null)
     }
 }
 
+function getOneFile($inputName,$saveName)
+{
+    // 上传文件
+    $result = array('result'=>true,'message'=>'');
+    $file = request()->file($inputName);
+    if (empty($file)) {
+        $result['result'] = false;
+        $result['message'] = '上传不能为空';
+        return $result;
+    }
+    // /uploads/certification 目录下
+    $info = $file->move( './uploads/'.$saveName);
+    if ($info) {
+        // 成功上传后 存放上传信息
+        $name = str_replace("\\","/",$info->getSaveName());
+
+        $result['message'] = $name;
+        return $result;
+    } else {
+        // 上传失败获取错误信息
+        $result['result'] = false;
+        $result['message'] = $file->getError();
+    }
+}
+
 // 管理员
 function is_admin()
 {
