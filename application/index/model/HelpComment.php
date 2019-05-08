@@ -63,7 +63,7 @@ class HelpComment extends BaseModel
                 } else {
                     $content = '你的求助评论被回复了，快去看看吧';
                     $type = 2;
-                    $type_id = $prior;
+                    $type_id = $help_id;
                     $help_comment = HelpComment::get($prior);
                     $user_id = $help_comment->user_id;
                     $result3 = Message::addContent($content,$user_id,$type,$type_id);

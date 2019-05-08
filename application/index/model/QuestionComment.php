@@ -61,7 +61,7 @@ class QuestionComment extends BaseModel
                 } else {
                     $content = '你的提问评论被回复了，快去看看吧';
                     $type = 4;
-                    $type_id = $prior;
+                    $type_id = $question_id;
                     $question_comment = questionComment::get($prior);
                     $user_id = $question_comment->user_id;
                     $result3 = Message::addContent($content, $user_id, $type, $type_id);

@@ -179,7 +179,7 @@ class User extends BaseModel
             //new_message
             $content = '你有一个报名被确认，你增加了相应的积分，快去看看吧';
             $type = 5;
-            $type_id = $apply_id;
+            $type_id = $help_id;
             $result6 = Message::addContent($content,$apply_user_id,$type,$type_id);
             $result7 = User::hasNewMessage($apply_user_id);
             if ($result1 and $result2 and
