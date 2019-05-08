@@ -16,6 +16,7 @@ use app\index\model\Help as HelpModel;
 
 class Help extends BaseController
 {
+
     public function create()
     {
         $data = input('param.');
@@ -32,7 +33,9 @@ class Help extends BaseController
                 'type' => $data['type']
             ]);
             if ($result) {
-                return success();
+                $help = $user->helps()->where(true)->order('create_time desc')->find();
+                $data = array('help_id'=>$help->help_id);
+                return success($data);
             } else {
                 return error('新增失败');
             }
