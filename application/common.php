@@ -45,10 +45,9 @@ function addUserNickname($data)
     }
     $nickname = $user->nickname;
     $avatar = $user->photo;
-    $is_cert = $user->cert;
+    $is_cert = $user->is_cert;
     $data = array('nickname'=>$nickname,'photo'=>$avatar,'is_cert'=>$is_cert)+$data;
     return $data;
-
 }
 
 // 输入数据验证
