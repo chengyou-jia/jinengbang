@@ -67,16 +67,16 @@ class QuestionComment extends BaseModel
                     $result3 = Message::addContent($content, $user_id, $type, $type_id);
                     $result4 = User::hasNewMessage($user_id);
                 }
+            }
 
-                // 提交事务
-                if ($result1 and $result2 and $result3 and $result4) {
-                    Db::commit();
-                    return true;
-                } else {
-                    // 回滚事务
-                    Db::rollback();
-                    return false;
-                }
+            // 提交事务
+            if ($result1 and $result2 and $result3 and $result4) {
+                Db::commit();
+                return true;
+            } else {
+                // 回滚事务
+                Db::rollback();
+                return false;
             }
         } catch (\Exception $e) {
             // 回滚事务
