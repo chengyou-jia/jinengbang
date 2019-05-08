@@ -77,6 +77,7 @@ function getOneFile($inputName,$saveName)
     if ($info) {
         // 成功上传后 存放上传信息
         $name = str_replace("\\","/",$info->getSaveName());
+        $name = $saveName.$name;
 
         $result['message'] = $name;
         return $result;

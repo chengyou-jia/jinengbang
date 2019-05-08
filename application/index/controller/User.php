@@ -129,6 +129,7 @@ class User extends BaseController
             // todo 存储地址可能待定
             $cert_photo = $info->getSaveName();
             $cert_photo = str_replace("\\","/",$cert_photo);
+            $cert_photo = 'certification/'.$cert_photo;
             $is_cert = 1;
             //保存
             $user->cert_photo = $cert_photo;
