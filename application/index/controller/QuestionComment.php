@@ -122,6 +122,14 @@ class QuestionComment extends BaseController
         if (count($questionComment)) {
             $questionComment = $questionComment->toArray();
             for ($i = 0; $i < count($questionComment); $i++) {
+                $question_comment_id = $questionComment[$i]['question_comment_id'];
+                $questionCommentI = new QuestionCommentModel();
+                $questionCommentI = $questionCommentI->where('prior',$question_comment_id)->find();
+                if (empty($questionCommentI)) {
+                    $questionComment[$i] = array('has_next'=>false) + $questionComment[$i];
+                } else {
+                    $questionComment[$i] = array('has_next'=>true) + $questionComment[$i];
+                }
                 $questionComment[$i] = addUserNickname($questionComment[$i]);
             }
             return success($questionComment);

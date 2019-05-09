@@ -120,6 +120,14 @@ class HelpComment extends BaseController
         if (count($helpComment)) {
             $helpComment = $helpComment->toArray();
             for ($i = 0; $i < count($helpComment); $i++) {
+                $help_comment_id = $helpComment[$i]['help_comment_id'];
+                $helpCommentI = new HelpCommentModel();
+                $helpCommentI = $helpCommentI->where('prior',$help_comment_id)->find();
+                if (empty($helpCommentI)) {
+                    $helpComment[$i] = array('has_next'=>false) + $helpComment[$i];
+                } else {
+                    $helpComment[$i] = array('has_next'=>true) + $helpComment[$i];
+                }
                 $helpComment[$i] = addUserNickname($helpComment[$i]);
             }
             return success($helpComment);
