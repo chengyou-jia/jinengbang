@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-05-09 12:53:47
+Date: 2019-05-09 18:43:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,7 +40,7 @@ CREATE TABLE `help` (
   `help_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `picture` varchar(255) DEFAULT NULL,
+  `picture` text,
   `browse` int(11) NOT NULL DEFAULT '0',
   `like` int(11) NOT NULL DEFAULT '0',
   `reply` int(11) NOT NULL DEFAULT '0',
@@ -117,7 +117,7 @@ CREATE TABLE `question` (
   `user_id` int(11) NOT NULL,
   `type` enum('1','2','3','0') NOT NULL DEFAULT '0' COMMENT '0提问 1吐槽 2表白 3其他',
   `content` varchar(255) NOT NULL,
-  `picture` varchar(255) DEFAULT NULL,
+  `picture` text,
   `like` int(11) NOT NULL DEFAULT '0',
   `browse` int(11) NOT NULL DEFAULT '0',
   `reply` int(11) NOT NULL DEFAULT '0',
@@ -128,7 +128,7 @@ CREATE TABLE `question` (
   `is_anonymous` enum('1','0') NOT NULL DEFAULT '0' COMMENT '是否匿名 0非1匿',
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`question_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question_comment
