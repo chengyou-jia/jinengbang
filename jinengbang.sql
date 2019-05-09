@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-05-08 22:19:33
+Date: 2019-05-09 12:53:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `help` (
   `has_finished` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未完成',
   `publisher` enum('2','1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`help_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help_comment
@@ -174,7 +174,7 @@ CREATE TABLE `user` (
   `is_cert` enum('1','2','0') NOT NULL DEFAULT '0' COMMENT '0表示未认证，1表示正在审核认证，2表示已认证(此处的认证为检验是否为校内成员）',
   `is_official` enum('0','1') DEFAULT '0' COMMENT '0表示未认证1表示已经认证为官方号',
   `nickname` varchar(255) NOT NULL,
-  `wechat_id` int(11) NOT NULL,
+  `wechat_id` varchar(255) NOT NULL,
   `photo` varchar(255) DEFAULT NULL COMMENT '存放头像地址',
   `update_time` datetime NOT NULL,
   `create_time` datetime NOT NULL,
