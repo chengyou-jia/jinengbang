@@ -29,7 +29,9 @@ class User extends BaseController
         //dump($user);
         //$user = new UserModel();
         $user = $user->where('wechat_id',$wechat_id)->find();
-        dump($user);
+        //$user = $user->where('role',$role)->find();
+
+        //dump($user);
         if ($user) {
             session('user',$user);
             return success();
@@ -62,9 +64,9 @@ class User extends BaseController
                return error('已经注册');
            }
            $user = model('User');
-           dump($user);
+//           dump($user);
            $result = $user->allowField(true)->save($data);
-           dump($user);
+//           dump($user);
            $user_id = $user->user_id; //再次查找存session
            if ($result) {
                $user = model('User');
