@@ -19,6 +19,8 @@ class BaseModel extends Model
     protected $deleteTime = 'delete_time';
     protected $defaultSoftDelete = 1;
 
+    protected $connection = 'db_config';
+
 
     public function saveMultiFile()
     {

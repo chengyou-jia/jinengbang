@@ -31,7 +31,9 @@ class Question extends BaseController
                 'title' => $data['title']
             ]);
             if ($result) {
-                return success();
+                $question = $user->questions()->where(true)->order('create_time desc')->find();
+                $data = array('help_id'=>$question->question_id);
+                return success($data);
             } else {
                 return error('新增失败');
             }

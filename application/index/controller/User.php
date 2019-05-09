@@ -13,16 +13,23 @@ namespace app\index\controller;
 
 use app\index\common\BaseController;
 use app\index\model\User as UserModel;
-
+use think\db;
 class User extends BaseController
 {
 
     public function login()
     {
-        // todo 现在只是模拟登陆肯定要改
+        // 
         $wechat_id = input('wechat_id');
         $user = model('User');
+        //$user = UserModel::get(49);
+        //dump($user);
+        //$user = new UserModel();
+        //$user = $user->where('user_id',49)->find();
+        //dump($user);
+        //$user = new UserModel();
         $user = $user->where('wechat_id',$wechat_id)->find();
+        dump($user);
         if ($user) {
             session('user',$user);
             return success();
@@ -55,7 +62,9 @@ class User extends BaseController
                return error('已经注册');
            }
            $user = model('User');
+           dump($user);
            $result = $user->allowField(true)->save($data);
+           dump($user);
            $user_id = $user->user_id; //再次查找存session
            if ($result) {
                $user = model('User');

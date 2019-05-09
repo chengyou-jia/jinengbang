@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-05-04 16:14:37
+Date: 2019-05-08 22:19:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,7 @@ CREATE TABLE `apply` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   PRIMARY KEY (`apply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help
@@ -56,7 +56,7 @@ CREATE TABLE `help` (
   `has_finished` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未完成',
   `publisher` enum('2','1','0') NOT NULL DEFAULT '0',
   PRIMARY KEY (`help_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help_comment
@@ -88,7 +88,7 @@ CREATE TABLE `label` (
   `delete_time` datetime NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`label_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for message
@@ -103,10 +103,10 @@ CREATE TABLE `message` (
   `delete_time` datetime NOT NULL,
   `is_office` enum('1','0') NOT NULL DEFAULT '1' COMMENT '1为官方消息',
   `status` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未读，1表示已读',
-  `type` enum('5','4','3','2','1','0') NOT NULL COMMENT '0官方系统消息 1求助id（有消息，被报名） 2求助评论id 3提问id 4提问评论id 5求助完成，获得分数',
+  `type` enum('5','4','3','2','1','0') NOT NULL COMMENT '0官方系统消息 1求助id（被评论，或有人报名）2求助评论id3提问id4提问评论id5求助完成，获得分数',
   `type_id` int(11) NOT NULL COMMENT '对应类型要跳转的id',
   PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question
@@ -128,7 +128,7 @@ CREATE TABLE `question` (
   `is_anonymous` enum('1','0') NOT NULL DEFAULT '0' COMMENT '是否匿名 0非1匿',
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`question_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question_comment
@@ -144,7 +144,7 @@ CREATE TABLE `question_comment` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   PRIMARY KEY (`question_comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for suggestion
@@ -188,5 +188,6 @@ CREATE TABLE `user` (
   `intro` varchar(255) DEFAULT NULL COMMENT '个人介绍',
   `score` int(11) NOT NULL DEFAULT '0' COMMENT '总积分',
   `help_num` int(11) NOT NULL DEFAULT '0' COMMENT '总帮助次数',
+  `cert_photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
