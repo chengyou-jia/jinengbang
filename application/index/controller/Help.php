@@ -24,13 +24,15 @@ class Help extends BaseController
         if ($checkResult === true) {
             $user_id = session('user.user_id');
             $user = UserModel::get($user_id);
+            $is_official = $user->is_official;
             //存储
             $result = $user->helps()->save([
                 'title' => $data['title'],
                 'content' => $data['content'],
                 'is_free' => $data['is_free'],
                 'askfor_type' => $data['askfor_type'],
-                'type' => $data['type']
+                'type' => $data['type'],
+                'publisher' => $is_official
             ]);
             if ($result) {
                 $help = $user->helps()->where(true)->order('create_time desc')->find();

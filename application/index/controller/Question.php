@@ -23,12 +23,14 @@ class Question extends BaseController
         if ($checkResult === true) {
             $user_id = session('user.user_id');
             $user = UserModel::get($user_id);
+            $is_official = $user->is_official;
             //存储
             $result = $user->questions()->save([
                 'content' => $data['content'],
                 'type' => $data['type'],
                 'is_anonymous' => $data['is_anonymous'],
-                'title' => $data['title']
+                'title' => $data['title'],
+                'publisher'=> $is_official
             ]);
             if ($result) {
                 $question = $user->questions()->where(true)->order('create_time desc')->find();

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-05-09 18:43:58
+Date: 2019-05-10 10:45:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,9 +54,9 @@ CREATE TABLE `help` (
   `type` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0为需要个人，1为需要多人',
   `title` varchar(255) NOT NULL,
   `has_finished` enum('1','0') NOT NULL DEFAULT '0' COMMENT '0表示未完成',
-  `publisher` enum('2','1','0') NOT NULL DEFAULT '0',
+  `publisher` enum('2','1','0') NOT NULL DEFAULT '0' COMMENT '0表示普通用户，1表示社团组织，2表示开发者',
   PRIMARY KEY (`help_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for help_comment
@@ -72,7 +72,7 @@ CREATE TABLE `help_comment` (
   `update_time` datetime NOT NULL,
   `delete_time` datetime NOT NULL,
   PRIMARY KEY (`help_comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for label
@@ -106,7 +106,7 @@ CREATE TABLE `message` (
   `type` enum('5','4','3','2','1','0') NOT NULL COMMENT '0官方系统消息 1求助id（被评论，或有人报名）2求助评论id3提问id4提问评论id5求助完成，获得分数',
   `type_id` int(11) NOT NULL COMMENT '对应类型要跳转的id',
   PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for question
@@ -127,6 +127,7 @@ CREATE TABLE `question` (
   `delete_time` datetime NOT NULL,
   `is_anonymous` enum('1','0') NOT NULL DEFAULT '0' COMMENT '是否匿名 0非1匿',
   `title` varchar(255) DEFAULT NULL,
+  `publisher` enum('2','1','0') NOT NULL DEFAULT '0' COMMENT '0表示普通用户，1表示社团组织，2表示开发者',
   PRIMARY KEY (`question_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
@@ -172,7 +173,7 @@ CREATE TABLE `user` (
   `wechat` varchar(255) NOT NULL COMMENT '此处手机号微信号都可以,能查找到即可',
   `mobile` bigint(11) NOT NULL,
   `is_cert` enum('1','2','0') NOT NULL DEFAULT '0' COMMENT '0表示未认证，1表示正在审核认证，2表示已认证(此处的认证为检验是否为校内成员）',
-  `is_official` enum('0','1') DEFAULT '0' COMMENT '0表示未认证1表示已经认证为官方号',
+  `is_official` enum('0','1') DEFAULT '0' COMMENT '0表示普通用户1表示社团组织2表示官方',
   `nickname` varchar(255) NOT NULL,
   `wechat_id` varchar(255) NOT NULL,
   `photo` varchar(255) DEFAULT NULL COMMENT '存放头像地址',
@@ -190,4 +191,4 @@ CREATE TABLE `user` (
   `help_num` int(11) NOT NULL DEFAULT '0' COMMENT '总帮助次数',
   `cert_photo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
