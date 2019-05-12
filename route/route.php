@@ -13,6 +13,7 @@ use think\facade\Route;
 
 Route::get('/', 'index/index/index');
 Route::get('/xdebug', 'index/index/xdebug');
+Route::get('getOpenid','index/user/getOpenid');
 Route::group('api', function () {
     Route::group('user', function () {
         Route::get('/', 'index/user/getInfo');

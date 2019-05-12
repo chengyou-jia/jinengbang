@@ -16,9 +16,6 @@ use think\model\concern\SoftDelete;
 class BaseModel extends Model
 {
     use SoftDelete;
-    protected $deleteTime = 'delete_time';
-    protected $defaultSoftDelete = 1;
-
     protected $connection = 'db_config';
 
 

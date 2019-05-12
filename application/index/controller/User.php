@@ -29,7 +29,9 @@ class User extends BaseController
         //dump($user);
         //$user = new UserModel();
         $user = $user->where('wechat_id',$wechat_id)->find();
-        //$user = $user->where('role',$role)->find();
+//        $sql = Db::name('user')->getLastSql();
+//        dump($sql);
+//        $user = $user->where('role',$role)->find();
 
         //dump($user);
         if ($user) {
@@ -132,7 +134,7 @@ class User extends BaseController
             return error('上传不能为空');
         }
         // 移动到框架应用根目录/uploads/certification 目录下
-        $info = $file->move( '../uploads/certification');
+        $info = $file->move( './uploads/certification');
         if ($info) {
             // 成功上传后 存放上传信息
             $user_id = session('user.user_id');
@@ -242,6 +244,23 @@ class User extends BaseController
             return error('存储失败');
         }
 
+    }
+
+    public function getOpenid()
+    {
+        $appid = 'wxef991d2d36f742fc';
+        $secret = 'ee17564af9e244e580eb008312109c76';
+        $js_code = input('code');
+        $grant_type = 'authorization_code';
+        $data = array(
+            'appid' => $appid,
+            'secret' => $secret,
+            'js_code' => $js_code,
+            'grant_type' => $grant_type
+        );
+        $url = 'https://api.weixin.qq.com/sns/jscode2session';
+        $data = send_request($url,$data);
+        return $data;
     }
 
 }

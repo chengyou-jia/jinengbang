@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-05-10 10:45:44
+Date: 2019-05-10 23:26:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -115,7 +115,7 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `question_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `type` enum('1','2','3','0') NOT NULL DEFAULT '0' COMMENT '0提问 1吐槽 2表白 3其他',
+  `type` enum('1','2','3','5','4','0') NOT NULL DEFAULT '0' COMMENT '0提问 1吐槽 2表白 3其他 4寻主寻物 5组队',
   `content` varchar(255) NOT NULL,
   `picture` text,
   `like` int(11) NOT NULL DEFAULT '0',
@@ -173,7 +173,7 @@ CREATE TABLE `user` (
   `wechat` varchar(255) NOT NULL COMMENT '此处手机号微信号都可以,能查找到即可',
   `mobile` bigint(11) NOT NULL,
   `is_cert` enum('1','2','0') NOT NULL DEFAULT '0' COMMENT '0表示未认证，1表示正在审核认证，2表示已认证(此处的认证为检验是否为校内成员）',
-  `is_official` enum('0','1') DEFAULT '0' COMMENT '0表示普通用户1表示社团组织2表示官方',
+  `is_official` enum('2','1','0') DEFAULT '0' COMMENT '0表示普通用户1表示社团组织2表示官方',
   `nickname` varchar(255) NOT NULL,
   `wechat_id` varchar(255) NOT NULL,
   `photo` varchar(255) DEFAULT NULL COMMENT '存放头像地址',
